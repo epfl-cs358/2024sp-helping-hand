@@ -300,5 +300,6 @@ TSWLatexianTemp*
 # Uncomment the next line to have this generated file ignored.
 #*Notes.bib
 
-out/
+out/*
+!out/proposal.pdf
 _minted-proposal
