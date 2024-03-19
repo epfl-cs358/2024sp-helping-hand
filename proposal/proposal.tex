@@ -46,12 +46,13 @@
 \usepackage{paracol}
 
 % HYPERLINKS
-\usepackage{hyperref}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
     linktoc=all,
     linkcolor=blue,
 }
+\usepackage{xurl}
 
 \usepackage[bottom]{footmisc}
 
@@ -69,6 +70,7 @@
 \title{Helping Hand}
 \author{Lucas Jung - IN BA6 324724\\Nour Guermazi - SC BA6 314474\\Pinar Oray - IN BA6 311543\\Jonas Sulzer - IN BA6 325554\\Yoan Giovannini IN BA6 303934}
 \date{2024 - 03}
+
 
 \newcommand{\footlink}[2]{\href{#2}{#1}\footnote{{\MakeUppercase #1}: \url{#2}}}
 \newcommand*{\fullref}[1]{\hyperref[{#1}]{\autoref*{#1} \nameref*{#1}}}
@@ -90,7 +92,9 @@
 \vspace{10pt}
 
 \input{idea.tex}
+\newpage
 \input{BOM.tex}
+\newpage
 \input{RAD.tex}
 
 \end{document}

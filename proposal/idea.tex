@@ -40,6 +40,8 @@ Furthermore, the potential extends beyond Sean's specific needs: this system cou
 Such a solution would offer increased autonomy to numerous individuals in their daily lives.
 It would be particularly competitive compared to existing alternatives that are very costly and often necessitate replacing the entire system with a ``smart``/digital version even though the one currently in place still works properly.
 
+% TODO add other use cases
+
 A fundamental aspect of this project is its commitment to adhering to \footlink{open standards}{https://en.wikipedia.org/wiki/Open_standard} and the \footlink{open source}{https://en.wikipedia.org/wiki/Open_source} philosophy.
 This commitment ensures the system's ease of customization for anyone interested in enhancing, tweaking, or adding functionalities.
 This stands in stark contrast to existing solutions in the market, which are often characterized by closed systems that are challenging (impossible) to integrate into a accessible central app (much simpler to use) and lack customization options.
@@ -72,9 +74,9 @@ This project aims to take a more broad and user-friendly approach by designing a
 
 \textbf{Hardware Components}
 
-The core of the modular box will utilize the \footlink{ESP8266}{https://en.wikipedia.org/wiki/ESP8266} microcontroller for its compact size, low power consumption, and Wi-Fi capabilities.
+The core of the modular box will utilize the \footlink{ESP32}{https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf} microcontroller for its compact size, low power consumption, and Wi-Fi capabilities.
 This will enable seamless communication with the home network and the user's smartphone application.
-Each box will be equipped with one ESP8266 that will host an expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the servos from the smartphone application via the home Wi-Fi network.
+Each box will be equipped with one ESP32 that will host an expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the servos from the smartphone application via the home Wi-Fi network.
 
 The remote control will be housed in a 3D printed adjustable case/holding to accommodate various sizes and shapes.
 The design should prioritize accessibility, ensuring that buttons remain accessible for direct manual control when needed.
@@ -82,12 +84,11 @@ The design should prioritize accessibility, ensuring that buttons remain accessi
 Equipped with servomotors, the modular box will simulate human interaction with the enclosed remote control.
 These servomotors enable precise and controlled button presses, ensuring reliable functionality.
 
-With a few ESP8266, some servos and 3D printing, the hardware for the project should cost less than 100 CHF.
-This will be further detailed when dressing the Bill of Materials (BOM) in the subsequent phase of the project.
+% TODO add and comment sketches
 
 \textbf{Software}
 
-The software side of the project will be implemented using \footlink{Arduino}{https://www.arduino.cc/} programming to control the ESP8266 microcontroller and servomotors.
+The software side of the project will be implemented using \footlink{Arduino}{https://www.arduino.cc/} programming to control the ESP32 microcontroller and servomotors.
 Arduino's user-friendly environment allows for efficient development and rapid iteration.
 
 The system will incorporate state management to keep track of the status of the remote control buttons, ensuring accurate feedback to the user and maintaining synchronization between the physical remote and the smartphone application.
