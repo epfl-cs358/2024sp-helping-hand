@@ -88,6 +88,10 @@ This module will enable the recording and replaying of infrared commands, elimin
 This feature proves particularly beneficial for remote controls with a higher button count (typically IR remotes), which are less compatible with the modular motors system.
 With this addition, we aim to accommodate every traditional remote controls and make them accessible via a smartphone application.
 
+We also have an additional goal of making the hardware of the project look and feel like a real product at the end of the course.
+We do not only want a system that is  functional, but we are really looking towards having it look slick and be as small as possible.
+Of course, we will start by implementing a working version first and then work our way up to reducing its size and improving the end user experience.
+
 % TODO add and comment sketches
 
 \textbf{Software}
@@ -100,6 +104,9 @@ The system will incorporate state management to keep track of the status of the 
 The dedicated smartphone application will be developed using the \footlink{Flutter framework}{https://flutter.dev/}.
 The application will prioritize accessibility, offering a user-friendly interface tailored to individuals with limited input capabilities.
 It should allow easy control over all the modular box installed in the house.
+
+We also need to design and implement an automatic network discovery protocol in order to automatically detect available remotes.
+As we want to support many remote encasings per network, the protocol has to assure correct communication between all the ESP32 and the smartphone application.
 
 If time permits, we could enhance the application by incorporating a built-in voice controlled feature.
 This addition would empower users to effortlessly command various devices using their voice, providing a more seamless experience.
