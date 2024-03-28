@@ -1,6 +1,6 @@
 \begin{minipage}[t]{0.65\textwidth}
-    In the depicted image, you'll find Sean and me.
-    Sean, a colleague of my mother, is unfortunately grappling with \href{https://en.wikipedia.org/wiki/ALS}{amyotrophic lateral sclerosis}\footnotemark (ALS), a terminal neurodegenerative disease that progressively diminishes his mobility.
+    In the depicted image, you'll find Sean and Lucas.
+    Sean, a colleague of Lucas' mother, is unfortunately grappling with \href{https://en.wikipedia.org/wiki/ALS}{amyotrophic lateral sclerosis}\footnotemark (ALS), a terminal neurodegenerative disease that progressively diminishes his mobility.
     Presently, he has to spend his days in an electric wheelchair, with only partial movement in his wrists.
     As a result, he relies on others for even the most basic tasks, such as opening a door or operating the lights in his home.
     Despite these challenges, Sean can still manage his smartphone while in his chair, thanks to a specialized joystick and a button.
@@ -16,12 +16,12 @@
 
 \section{High-level description}
 
-The project aims to create a modular box in which the user can install any one of the various remote controls they have in their home.
-The box will be equipped with \footlink{servomotors}{https://en.wikipedia.org/wiki/Servomotor} and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having the motors press on the buttons.
+The project aims to create a box in which the user can install any one of the various remote controls they have in their home.
+The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki/Plotter} like mechanism and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having a solenoid activator attached to the plotter press on the buttons.
 The box must be designed in such a way that the buttons are still usable without causing disruption to a user who prefers direct manual control of the remote.
 The design of the case should also be easily adaptable to different type of remote controls.
 
-Each modular box is connected to the Wi-Fi network of the home it is installed in, and the user can command it by using an application on their smartphone.
+Each box is connected to the Wi-Fi network of the home it is installed in, and the user can command it by using an application on their smartphone.
 Naturally, the application will be meticulously designed to maximize \footlink{accessibility}{https://en.wikipedia.org/wiki/Accessibility} for users with limited input capabilities.
 Collaborative feedback and discussions with Sean will play a pivotal role in enhancing the system's accessibility, as he provides valuable insights from the perspective of a user with disabilities.
 
@@ -43,7 +43,7 @@ In fact, even though this system is targeted at people with disabilities, it mig
 
 A fundamental aspect of this project is its commitment to adhering to \footlink{open standards}{https://en.wikipedia.org/wiki/Open_standard} and the \footlink{open source}{https://en.wikipedia.org/wiki/Open_source} philosophy.
 This commitment ensures the system's ease of customization for anyone interested in enhancing, tweaking, or adding functionalities.
-This stands in stark contrast to existing solutions in the market, which are often characterized by closed systems that are challenging (impossible) to integrate into a accessible central app (much simpler to use) and lack customization options.
+This stands in stark contrast to existing solutions in the market, which are often characterized by closed systems that are challenging or even impossible to integrate into a accessible and simple to use central app and lack customization options.
 
 \subsection{User Stories}
 
@@ -54,20 +54,19 @@ This stands in stark contrast to existing solutions in the market, which are oft
     \item As a user with unique needs, I want the modular box to be adaptable to different types of remote controls in my home, ensuring flexibility in controlling various appliances.
     \item As a potential end user looking for cost-effective solutions, I am looking for a commercial solution that offers increased autonomy, making it a viable and affordable option for individuals with diverse needs.
     \item As a developer or tech enthusiast, I want the system to adhere to open standards and open source philosophy, enabling me to enhance, customize, or add functionalities by making \footlink{pull requests}{https://en.wikipedia.org/wiki/Distributed_version_control} to the project's repository.
-    \item As a user assisting someone with unique needs, I want the physical setup of the modular box to be straightforward and require minimal technical expertise, ensuring that I can provide support without complications even if I am not very skilled with new technologies.
+    \item As a user assisting someone with unique needs, I want the setup of the box and the configuration of the app to be straightforward and require minimal technical expertise, ensuring that I can provide support without complications even if I am not very skilled with new technologies.
     \item As a user with limited physical dexterity, I want to operate my TV remote control from my smartphone using the modular box system, allowing me to enjoy television without struggling with a conventional remote control.
-    \item As a potential startup company interested in developing a commercial solution, I want the project to serve as a prototype for a cost-effective and easy to install home automation system.
 \end{itemize}
 
 \subsection{Existing Projects}
 
-After searching online for existing solutions, I discovered that none fully align with the objectives outlined above.
+After searching online for existing solutions, Lucas discovered that none fully align with the objectives outlined above.
 Many of the identified projects focus on complete replacement of the remote control, utilizing new emitters controlled by a microcontroller.
 These implementations typically involve either \footlink{infrared emitters (project)}{https://github.com/computerjazz/ir-mobile} that record signals from the targeted remote control or \footlink{radio frequency (project)}{https://github.com/loopj/open-rts} based emitters that analyze the \footlink{rolling codes}{https://en.wikipedia.org/wiki/Rolling_code} of the initial device.
 
 While these approaches are great and offer reliable performance, they are not well-suited for the inclusive and versatile goals of this project.
 They often require installation on specific hardware and involve intricate setup and code manipulation to function.
-This project aims to take a more broad and user-friendly approach by designing a modular solution that seamlessly integrates with various remote controls out of the box, whatever transmission mechanism they might use.
+This project aims to take a more broad and user-friendly approach by designing an adaptive solution that seamlessly integrates with various remote controls out of the box, whatever transmission mechanism they might use.
 
 \section{Technical Specifications}
 
@@ -75,38 +74,94 @@ This project aims to take a more broad and user-friendly approach by designing a
 
 The core of the modular box will utilize the \footlink{ESP32}{https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf} microcontroller for its compact size, low power consumption, and Wi-Fi capabilities.
 This will enable seamless communication with the home network and the user's smartphone application.
-Each box will be equipped with one ESP32 that will host an expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the servos from the smartphone application via the home Wi-Fi network.
+Each box will be equipped with one ESP32 that will host and expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the plotter stepper motors and solenoid actuator from the smartphone application via the home Wi-Fi network.
 
-The remote control will be housed in a 3D printed adjustable case/holding to accommodate various sizes and shapes.
+The remote control will be housed in a laser-cut adjustable wood case/holding to accommodate various sizes and shapes.
 The design should prioritize accessibility, ensuring that buttons remain accessible for direct manual control when needed.
 
-Equipped with servomotors, the modular box will simulate human interaction with the enclosed remote control.
-These servomotors enable precise and controlled button presses, ensuring reliable functionality.
+Equipped with a plotter-like system, the box will simulate human interaction with the enclosed remote control.
+This plotter system enables precise and controlled button presses, ensuring reliable functionality by moving to the exact position of the button and then actuating the button through a purely vertical movement done by the solenoid.
 
-Additionally, we will enhance the system by integrating an infrared module.
-This module will enable the recording and replaying of infrared commands, eliminating the need for housing this type of remote control within a separate enclosure.
-This feature proves particularly beneficial for remote controls with a higher button count (typically IR remotes), which are less compatible with the modular motors system.
-With this addition, we aim to accommodate every traditional remote controls and make them accessible via a smartphone application.
+In a basic configuration process, after installing the remote in the box, the user selects button position by manually positioning the plotter using arrow buttons in the app.
+The coordinate of that position is then saved and associated with a button and label in the app.
 
-We also have an additional goal of making the hardware of the project look and feel like a real product at the end of the course.
-We do not only want a system that is  functional, but we are really looking towards having it look slick and be as small as possible.
-Of course, we will start by implementing a working version first and then work our way up to reducing its size and improving the end user experience.
+Additionally, to facilitate the setup process, an attachable module with a camera allows to assist the configuration of the device through computer vision.
+The computer vision, running on an external computer, also communicates over the network with the ESP32 board as well as with the camera to get the video feed.
+The software detects the buttons on the image of the remote and allows the user to select the buttons to make available through the app.
+For each of the chosen buttons, it auto-detects the exact position to execute the button press operation thanks to the visual feedback provided by the camera.
+In case the user prefers not to use the camera and computer vision or in case the computer vision fails due to low contrast or a special remote type/design the manual setup process serves as a fallback. 
 
+\begin{minipage}[t]{0.30\textwidth}
+    \centering\raisebox{\dimexpr \topskip-\height}{
+    \includegraphics[width=\textwidth]{latex-img/shema_top.png}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.65\textwidth}
+    Looking from the top, we can see the base plate with the different components on it.\\
+
+    Legend:
+    \begin{itemize}
+        \item (A) motors
+        \item (B) rail (metal rod)
+        \item (C) lead screw
+        \item (D) base plate
+        \item (E) solenoid holder
+        \item (F) clamp
+    \end{itemize}
+\end{minipage}
+
+
+\begin{minipage}[t]{0.5\textwidth}
+    \begin{itemize}
+        \item (G) solenoid
+        \item (H) wingnut
+        \item (I) rubber
+    \end{itemize}
+    \vspace{5mm}
+
+    From the side we can see how the plotter can move on the two axis hovering above the remote.
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+    \centering\raisebox{\dimexpr \topskip-\height}{
+    \includegraphics[width=\textwidth]{latex-img/shema_front.png}}
+\end{minipage}\hfill
+
+
+\begin{minipage}[t]{0.30\textwidth}
+    \centering\raisebox{\dimexpr \topskip-\height}{
+    \includegraphics[width=\textwidth]{latex-img/shema_solenoid_holder.png}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.65\textwidth}
+    \vspace{5mm}
+    In the detail view of the solenoid holder we can see how the height of the solenoid can be adjusted to match the thickness of the remote.
+\end{minipage}
+
+
+\begin{minipage}[t]{0.5\textwidth}
+    \vspace{5mm}
+    The clamp allows to safely hold the remote in place.
+\end{minipage}
+\begin{minipage}[t]{0.45\textwidth}
+    \centering\raisebox{\dimexpr \topskip-\height}{
+    \includegraphics[width=\textwidth]{latex-img/schema_clamp.png}}
+\end{minipage}\hfill
 % TODO add and comment sketches
 
 \textbf{Software}
 
-The software side of the project will be implemented using \footlink{Arduino}{https://www.arduino.cc/} programming to control the ESP32 microcontroller and servomotors.
+The software side of the project will be implemented using \footlink{Arduino}{https://www.arduino.cc/} programming to control the ESP32 microcontroller.
 Arduino's user-friendly environment allows for efficient development and rapid iteration.
-
-The system will incorporate state management to keep track of the status of the remote control buttons, ensuring accurate feedback to the user and maintaining synchronization between the physical remote and the smartphone application.
 
 The dedicated smartphone application will be developed using the \footlink{Flutter framework}{https://flutter.dev/}.
 The application will prioritize accessibility, offering a user-friendly interface tailored to individuals with limited input capabilities.
-It should allow easy control over all the modular box installed in the house.
+It should allow easy control of multiple boxes installed in the house.
+
+The computer vision part is running on a computer assisting the setup. 
+The application on the computer tries to recognize buttons on the remote and allows to easily choose the ones that should be accessible in the smartphone app.
+When a button is selected, the computer vision calibrates the position for the button press and allows to test whether a button press actually works.
+Finally, the configuration can be transferred to the smartphone by temporarily storing it on the ESP32.
 
 We also need to design and implement an automatic network discovery protocol in order to automatically detect available remotes.
-As we want to support many remote encasings per network, the protocol has to assure correct communication between all the ESP32 and the smartphone application.
+As we want to support many remote encasings in a single home network, the protocol has to assure correct communication between all the ESP32 boards and the smartphone application.
 
 If time permits, we could enhance the application by incorporating a built-in voice controlled feature.
 This addition would empower users to effortlessly command various devices using their voice, providing a more seamless experience.
