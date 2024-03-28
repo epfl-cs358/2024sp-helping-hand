@@ -17,7 +17,7 @@
 \section{High-level description}
 
 The project aims to create a box in which the user can install any one of the various remote controls they have in their home.
-The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki/Plotter} like mechanism and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having a selenoid activator attached to the plotter press on the buttons.
+The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki/Plotter} like mechanism and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having a solenoid activator attached to the plotter press on the buttons.
 The box must be designed in such a way that the buttons are still usable without causing disruption to a user who prefers direct manual control of the remote.
 The design of the case should also be easily adaptable to different type of remote controls.
 
@@ -74,13 +74,13 @@ This project aims to take a more broad and user-friendly approach by designing a
 
 The core of the modular box will utilize the \footlink{ESP32}{https://www.espressif.com/sites/default/files/documentation/esp32_datasheet_en.pdf} microcontroller for its compact size, low power consumption, and Wi-Fi capabilities.
 This will enable seamless communication with the home network and the user's smartphone application.
-Each box will be equipped with one ESP32 that will host and expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the plotter stepper motors and selenoid actuator from the smartphone application via the home Wi-Fi network.
+Each box will be equipped with one ESP32 that will host and expose a \footlink{Web API}{https://en.wikipedia.org/wiki/Web_API} to interact with the plotter stepper motors and solenoid actuator from the smartphone application via the home Wi-Fi network.
 
 The remote control will be housed in a laser-cut adjustable wood case/holding to accommodate various sizes and shapes.
 The design should prioritize accessibility, ensuring that buttons remain accessible for direct manual control when needed.
 
 Equipped with a plotter-like system, the box will simulate human interaction with the enclosed remote control.
-This plotter system enables precise and controlled button presses, ensuring reliable functionality by moving to the exact position of the button and then actuating the button through a purely vertical movement done by the selenoid.
+This plotter system enables precise and controlled button presses, ensuring reliable functionality by moving to the exact position of the button and then actuating the button through a purely vertical movement done by the solenoid.
 
 In a basic configuration process, after installing the remote in the box, the user selects button position by manually positioning the plotter using arrow buttons in the app.
 The coordinate of that position is then saved and associated with a button and label in the app.
