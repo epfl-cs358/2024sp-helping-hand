@@ -83,13 +83,14 @@ The design should prioritize accessibility, ensuring that buttons remain accessi
 Equipped with a plotter-like system, the box will simulate human interaction with the enclosed remote control.
 This plotter system enables precise and controlled button presses, ensuring reliable functionality by moving to the exact position of the button and then actuating the button through a purely vertical movement done by the selenoid.
 
+In a basic configuration process, after installing the remote in the box, the user selects button position by manually positioning the plotter using arrow buttons in the app.
+The coordinate of that position is then saved and associated with a button and label in the app.
 
 Additionally, to facilitate the setup process, an attachable module with a camera allows to assist the configuration of the device through computer vision.
 The computer vision, running on an external computer, also communicates over the network with the ESP32 board as well as with the camera to get the video feed.
 The software detects the buttons on the image of the remote and allows the user to selects the buttens to make available through the app.
-For each of the chosen buttons, it auto-detects the exact position to execute the button press operationi thanks to the visual feedback provided by the camera.
-
-There is of course also an option to manually indicate the location of the buttons using only the app on the phone in case the user prefers not to use the camera and computer vision or in case the computer vision fails due to low contrast or a special remote type/design. 
+For each of the chosen buttons, it auto-detects the exact position to execute the button press operation thanks to the visual feedback provided by the camera.
+In case the user prefers not to use the camera and computer vision or in case the computer vision fails due to low contrast or a special remote type/design the manual setup process serves as a fallback. 
 
 % TODO add and comment sketches
 
