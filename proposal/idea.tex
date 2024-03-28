@@ -17,7 +17,7 @@
 \section{High-level description}
 
 The project aims to create a box in which the user can install any one of the various remote controls they have in their home.
-The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki/Plotter} like mechanism and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having the plotter press on the buttons.
+The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki/Plotter} like mechanism and a Wi-Fi capable microcontroller, allowing for remote operation of the enclosed remote control by having a selenoid activator attached to the plotter press on the buttons.
 The box must be designed in such a way that the buttons are still usable without causing disruption to a user who prefers direct manual control of the remote.
 The design of the case should also be easily adaptable to different type of remote controls.
 
@@ -81,7 +81,8 @@ The remote control will be housed in a lase-cut adjustable wood case/holding to 
 The design should prioritize accessibility, ensuring that buttons remain accessible for direct manual control when needed.
 
 Equipped with a plotter-like system, the box will simulate human interaction with the enclosed remote control.
-These plotter system enables precise and controlled button presses, ensuring reliable functionality.
+This plotter system enables precise and controlled button presses, ensuring reliable functionality by moving to the exact position of the button and then actuating the button through a purely vertical movement done by the selenoid.
+
 
 Additionally, to facilitate the setup process, an attachable module with a camera allows to assist the configuration of the device through computer vision.
 The computer vision, running on an external computer, also communicates over the network with the ESP32 board as well as with the camera to get the video feed.
