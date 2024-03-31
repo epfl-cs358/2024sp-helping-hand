@@ -21,6 +21,7 @@ The box will be equipped with a \footlink{plotter}{https://en.wikipedia.org/wiki
 The box must be designed in such a way that the buttons are still usable without causing disruption to a user who prefers direct manual control of the remote.
 The design of the case should also be easily adaptable to different type of remote controls.
 
+Even though in the scope of the project we'll only be able to build one box, the idea is that a user can install multiple of these boxes for as many remotes as they want to use.
 Each box is connected to the Wi-Fi network of the home it is installed in, and the user can command it by using an application on their smartphone.
 Naturally, the application will be meticulously designed to maximize \footlink{accessibility}{https://en.wikipedia.org/wiki/Accessibility} for users with limited input capabilities.
 Collaborative feedback and discussions with Sean will play a pivotal role in enhancing the system's accessibility, as he provides valuable insights from the perspective of a user with disabilities.
@@ -86,6 +87,7 @@ In a basic configuration process, after installing the remote in the box, the us
 The coordinate of that position is then saved and associated with a button and label in the app.
 
 Additionally, to facilitate the setup process, an attachable module with a camera allows to assist the configuration of the device through computer vision.
+If a user has multiple boxes in their home, they can use that single camera module to configure all of the boxes since it's only used during the setup process.
 The computer vision, running on an external computer, also communicates over the network with the ESP32 board as well as with the camera to get the video feed.
 The software detects the buttons on the image of the remote and allows the user to select the buttons to make available through the app.
 For each of the chosen buttons, it auto-detects the exact position to execute the button press operation thanks to the visual feedback provided by the camera.
