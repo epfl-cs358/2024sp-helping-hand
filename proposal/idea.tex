@@ -93,11 +93,11 @@ The software detects the buttons on the image of the remote and allows the user 
 For each of the chosen buttons, it auto-detects the exact position to execute the button press operation thanks to the visual feedback provided by the camera.
 In case the user prefers not to use the camera and computer vision or in case the computer vision fails due to low contrast or a special remote type/design the manual setup process serves as a fallback. 
 
-\begin{minipage}[t]{0.30\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
     \centering\raisebox{\dimexpr \topskip-\height}{
-    \includegraphics[width=\textwidth]{latex-img/shema_top.png}}
+    \includegraphics[width=\textwidth]{latex-img/schema_top.png}}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.65\textwidth}
+\begin{minipage}[t]{0.5\textwidth}
     Looking from the top, we can see the base plate with the different components on it.\\
 
     Legend:
@@ -108,15 +108,21 @@ In case the user prefers not to use the camera and computer vision or in case th
         \item (D) base plate
         \item (E) solenoid holder
         \item (F) clamp
+        \item (G) solenoid
+        \item (H) wingnut
+        \item (I) rubber
+        \item (J) ESP32-c6
     \end{itemize}
 \end{minipage}
 
 
 \begin{minipage}[t]{0.5\textwidth}
     \begin{itemize}
-        \item (G) solenoid
-        \item (H) wingnut
-        \item (I) rubber
+        \item (K) ESP32-CAM
+        \item (L) camera module
+        \item (M) motor controller
+        \item (N) power supply
+        \item (P) solenoid controller
     \end{itemize}
     \vspace{5mm}
 
@@ -124,15 +130,15 @@ In case the user prefers not to use the camera and computer vision or in case th
 \end{minipage}
 \begin{minipage}[t]{0.45\textwidth}
     \centering\raisebox{\dimexpr \topskip-\height}{
-    \includegraphics[width=\textwidth]{latex-img/shema_front.png}}
+    \includegraphics[width=\textwidth]{latex-img/schema_front.png}}
 \end{minipage}\hfill
 
 
-\begin{minipage}[t]{0.30\textwidth}
+\begin{minipage}[t]{0.45\textwidth}
     \centering\raisebox{\dimexpr \topskip-\height}{
-    \includegraphics[width=\textwidth]{latex-img/shema_solenoid_holder.png}}
+    \includegraphics[width=\textwidth]{latex-img/schema_solenoid_holder.png}}
 \end{minipage}\hfill
-\begin{minipage}[t]{0.65\textwidth}
+\begin{minipage}[t]{0.5\textwidth}
     \vspace{5mm}
     In the detail view of the solenoid holder we can see how the height of the solenoid can be adjusted to match the thickness of the remote.
 \end{minipage}
@@ -146,7 +152,16 @@ In case the user prefers not to use the camera and computer vision or in case th
     \centering\raisebox{\dimexpr \topskip-\height}{
     \includegraphics[width=\textwidth]{latex-img/schema_clamp.png}}
 \end{minipage}\hfill
-% TODO add and comment sketches
+
+
+\begin{minipage}[t]{0.40\textwidth}
+    \centering\raisebox{\dimexpr \topskip-\height}{
+    \includegraphics[width=\textwidth]{latex-img/camera_module.png}}
+\end{minipage}\hfill
+\begin{minipage}[t]{0.5\textwidth}
+    \vspace{5mm}
+    And finally the camera module.
+\end{minipage}
 
 \textbf{Software}
 
