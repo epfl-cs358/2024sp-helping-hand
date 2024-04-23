@@ -7,7 +7,8 @@ Preferences usage: https://github.com/vshymanskyy/Preferences
 */
 #include <ESPmDNS.h>
 #include <Preferences.h>
-#include "defines.h"
+#include <WiFi.h>
+#include <WebServer.h>
 
 //blue led port
 #define LED_BLUE 16
@@ -57,7 +58,7 @@ void wifiSetup() {
 }
 
 
-WiFiWebServer server(80);
+WebServer server(80);
 const char* rootPath = "/";
 const char* moveToPath = "/go-to";
 const char* pressPath = "/press";
