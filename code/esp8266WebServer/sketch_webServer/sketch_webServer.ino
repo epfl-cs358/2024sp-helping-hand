@@ -9,6 +9,9 @@ Preferences usage: https://github.com/vshymanskyy/Preferences
 #include <Preferences.h>
 #include <WiFi.h>
 #include <WebServer.h>
+#include <AccelStepper.h>
+#include <MultiStepper.h>
+#define MotorInterfaceType 1
 
 //blue led port
 #define LED_BLUE 16
@@ -22,6 +25,26 @@ const char* hostname = "plottercontroller";
 //storage of wifi credentials
 const char* appNamespace = "web-server";
 Preferences preferences;
+
+//motors parameters: DO NOT USE 25 & 26 pins
+AccelStepper X(MotorInterfaceType, 16, 17); //16: step, 17: direction
+AccelStepper Y(MotorInterfaceType, 32, 33); //32: step, 33: direction
+MultiStepper XY;
+#define MOTOR_MAX_SPEED 1000.0
+const int MAX_X = 2000;
+const int MAX_Y = 2000;
+const int MOVE_OUT_X = 0;
+const int MOVE_OUT_Y = 0;
+
+/*
+Setup the motors
+*/
+void motorsSetup() {
+  X.setMaxSpeed(MOTOR_MAX_SPEED);
+  Y.setMaxSpeed(MOTOR_MAX_SPEED);
+  XY.addStepper(X);
+  XY.addStepper(Y);
+}
 
 /*
 Setup the wifi connection
@@ -83,9 +106,21 @@ void setup() {
   Serial.begin(115200);
   Serial.println();
   delay(1000); //delay so that the first string is printed
+  Serial.println("HELLO");
   pinMode(LED_BLUE, OUTPUT);
   wifiSetup();
   webServerSetup();
+  motorsSetup();
+}
+
+/*
+Move the motors the the (x,y) position
+*/
+void goTo(int x, int y) {
+  long pos[2] = {x,y};
+  XY.moveTo(pos);
+  XY.runSpeedToPosition();
+  while(X.distanceToGo() != 0 || Y.distanceToGo() != 0){} //wait for the plotter to stop
 }
 
 /**
@@ -141,7 +176,12 @@ void handleMoveTo() {
     int coord[2] = {0,0};
     coord[0] = atoi(server.arg("x").c_str());
     coord[1] = atoi(server.arg("y").c_str());
+    if(coord[0] < 0) coord[0] = 0;
+    if(coord[1] < 0) coord[1] = 0;
+    if(coord[0] > MAX_X) coord[0] = MAX_X;
+    if(coord[1] > MAX_Y) coord[1] = MAX_Y;
     setCoordinates(coord);
+    goTo(coord[0], coord[1]);
     server.send(200, F("text/plain"), "OK");
   }
   digitalWrite(LED_BLUE, LOW);
@@ -160,7 +200,13 @@ void handleDiscovery() {
   }
 }
 
-void handleMoveOut() {}
+//move out of the remote
+void handleMoveOut() {
+  goTo(MOVE_OUT_X, MOVE_OUT_Y);
+  int coord[2] = {MOVE_OUT_X, MOVE_OUT_Y};
+  setCoordinates(coord);
+  server.send(200, F("text/plain"), "OK");
+}
 void handlePress() {}
 
 void handleNotFound() {
