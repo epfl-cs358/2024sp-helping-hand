@@ -62,6 +62,7 @@ const char* rootPath = "/";
 const char* moveToPath = "/go-to";
 const char* pressPath = "/press";
 const char* moveOutPath = "/move-out";
+const char* discoveryPath = "/discovery-hh";
 
 /**
 Setup the web server
@@ -71,6 +72,7 @@ void webServerSetup() {
   server.on(F(moveToPath), handleMoveTo);
   server.on(F(pressPath), handlePress);
   server.on(F(moveOutPath), handleMoveOut);
+  server.on(F(discoveryPath), handleDiscovery);
   server.onNotFound(handleNotFound);
   server.begin();
   Serial.println("Web server started");
@@ -142,6 +144,19 @@ void handleMoveTo() {
     server.send(200, F("text/plain"), "OK");
   }
   digitalWrite(LED_BLUE, LOW);
+}
+
+/**
+Handle the web page at /discovery-hh
+Returns device type (PLO) and the mac address
+*/
+void handleDiscovery() {
+  if(isGet()){
+    String message = String("PLO");
+    message += ",";
+    message += WiFi.macAddress();
+    server.send(200, F("text/plain"), message.c_str());
+  }
 }
 
 void handleMoveOut() {}
