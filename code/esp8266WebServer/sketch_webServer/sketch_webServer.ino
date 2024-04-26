@@ -11,6 +11,7 @@ Preferences usage: https://github.com/vshymanskyy/Preferences
 #include <WebServer.h>
 #include <AccelStepper.h>
 #include <MultiStepper.h>
+#include <ESP32Servo.h>
 #define MotorInterfaceType 1
 
 //blue led port
@@ -35,6 +36,22 @@ const int MAX_X = 2000;
 const int MAX_Y = 2000;
 const int MOVE_OUT_X = 0;
 const int MOVE_OUT_Y = 0;
+
+//servo parameters
+const int SERVO_PIN = 18;
+const int UP_ANGLE = 90;
+const int SHORT_PRESS_ANGLE = 150;
+const int LONG_PRESS_ANGLE = 190;
+const int SERVO_DELAY = 300; //in ms
+Servo servo;
+
+/*
+Setup the servo
+*/
+void servoSetup() {
+  servo.attach(SERVO_PIN);
+  servo.write(UP_ANGLE);
+}
 
 /*
 Setup the motors
@@ -84,7 +101,8 @@ void wifiSetup() {
 WebServer server(80);
 const char* rootPath = "/";
 const char* moveToPath = "/go-to";
-const char* pressPath = "/press";
+const char* shortPressPath = "/short-press";
+const char* longPressPath = "/long-press";
 const char* moveOutPath = "/move-out";
 const char* discoveryPath = "/discovery-hh";
 
@@ -94,7 +112,8 @@ Setup the web server
 void webServerSetup() {
   server.on(F(rootPath), handleRoot);
   server.on(F(moveToPath), handleMoveTo);
-  server.on(F(pressPath), handlePress);
+  server.on(F(shortPressPath), handleShortPress);
+  server.on(F(longPressPath), handleLongPress);
   server.on(F(moveOutPath), handleMoveOut);
   server.on(F(discoveryPath), handleDiscovery);
   server.onNotFound(handleNotFound);
@@ -111,6 +130,7 @@ void setup() {
   wifiSetup();
   webServerSetup();
   motorsSetup();
+  servoSetup();
 }
 
 /*
@@ -207,7 +227,24 @@ void handleMoveOut() {
   setCoordinates(coord);
   server.send(200, F("text/plain"), "OK");
 }
-void handlePress() {}
+
+//execute short press
+void handleShortPress() {
+  servo.write(SHORT_PRESS_ANGLE);
+  delay(SERVO_DELAY);
+  servo.write(UP_ANGLE);
+  delay(SERVO_DELAY);
+  server.send(200, F("text/plain"), "OK");
+}
+
+//execute long press
+void handleLongPress() {
+  servo.write(LONG_PRESS_ANGLE);
+  delay(SERVO_DELAY);
+  servo.write(UP_ANGLE);
+  delay(SERVO_DELAY);
+  server.send(200, F("text/plain"), "OK");
+}
 
 void handleNotFound() {
   server.send(404, F("text/plain"), "404 not found");
