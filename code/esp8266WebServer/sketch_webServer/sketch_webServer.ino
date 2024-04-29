@@ -40,9 +40,10 @@ const int MOVE_OUT_Y = 0;
 //servo parameters
 const int SERVO_PIN = 18;
 const int UP_ANGLE = 90;
-const int SHORT_PRESS_ANGLE = 150;
-const int LONG_PRESS_ANGLE = 190;
-const int SERVO_DELAY = 300; //in ms
+const int PRESS_ANGLE = 190;
+const int SERVO_SHORT_DELAY = 300; //in ms
+const int SERVO_LONG_DELAY = 1500; //in ms
+const int SERVO_DELAY = 300; //in ms (delay for the servo to go up)
 Servo servo;
 
 /*
@@ -230,8 +231,8 @@ void handleMoveOut() {
 
 //execute short press
 void handleShortPress() {
-  servo.write(SHORT_PRESS_ANGLE);
-  delay(SERVO_DELAY);
+  servo.write(PRESS_ANGLE);
+  delay(SERVO_SHORT_DELAY);
   servo.write(UP_ANGLE);
   delay(SERVO_DELAY);
   server.send(200, F("text/plain"), "OK");
@@ -239,8 +240,8 @@ void handleShortPress() {
 
 //execute long press
 void handleLongPress() {
-  servo.write(LONG_PRESS_ANGLE);
-  delay(SERVO_DELAY);
+  servo.write(PRESS_ANGLE);
+  delay(SERVO_LONG_DELAY);
   servo.write(UP_ANGLE);
   delay(SERVO_DELAY);
   server.send(200, F("text/plain"), "OK");
