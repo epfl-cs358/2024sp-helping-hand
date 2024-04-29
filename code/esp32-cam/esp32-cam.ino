@@ -136,7 +136,7 @@ void setup() {
   setupLedFlash(LED_GPIO_NUM);
 #endif
 
-  WiFi.setHostname("mit-helping-hand");
+  WiFi.setHostname("helping-hand-cam");
   WiFi.begin(ssid, password);
   WiFi.setSleep(false);
 
