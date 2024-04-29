@@ -356,6 +356,7 @@ static esp_err_t stream_handler(httpd_req_t *req)
 
     return res;
 }
+#endif
 
 static esp_err_t parse_get(httpd_req_t *req, char **obuf)
 {
@@ -379,6 +380,34 @@ static esp_err_t parse_get(httpd_req_t *req, char **obuf)
     return ESP_FAIL;
 }
 
+static esp_err_t led_flash_handler(httpd_req_t *req)
+{
+    char *buf = NULL;
+    char intensity[32];
+
+    if (parse_get(req, &buf) != ESP_OK) {
+        return ESP_FAIL;
+    }
+    if (httpd_query_key_value(buf, "intensity", intensity, sizeof(intensity)) != ESP_OK) {
+        free(buf);
+        httpd_resp_send_404(req);
+        return ESP_FAIL;
+    }
+    free(buf);
+
+    int val = atoi(intensity);
+
+    led_duty = val;
+#ifdef DEBUG_ENDPOINTS
+    if (isStreaming)
+        enable_led(true);
+#endif
+
+    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+    return httpd_resp_send(req, NULL, 0);
+}
+
+#ifdef DEBUG_ENDPOINTS
 static esp_err_t cmd_handler(httpd_req_t *req)
 {
     char *buf = NULL;
@@ -755,6 +784,19 @@ void startCameraServer()
 #endif
     };
 
+    httpd_uri_t led_flash_uri = {
+        .uri = "/led-flash",
+        .method = HTTP_GET,
+        .handler = led_flash_handler,
+        .user_ctx = NULL
+#ifdef CONFIG_HTTPD_WS_SUPPORT
+        ,
+        .is_websocket = false,
+        .handle_ws_control_frames = false,
+        .supported_subprotocol = NULL
+#endif
+    };
+
 #ifdef DEBUG_ENDPOINTS
     httpd_uri_t index_uri = {
         .uri = "/",
@@ -900,9 +942,7 @@ void startCameraServer()
         .supported_subprotocol = NULL
 #endif
     };
-#endif
 
-#ifdef DEBUG_ENDPOINTS
     ra_filter_init(&ra_filter, 20);
 #endif
 
@@ -910,6 +950,7 @@ void startCameraServer()
     if (httpd_start(&camera_httpd, &config) == ESP_OK)
     {
         httpd_register_uri_handler(camera_httpd, &discovery_uri);
+        httpd_register_uri_handler(camera_httpd, &led_flash_uri);
         httpd_register_uri_handler(camera_httpd, &capture_uri);
 
 #ifdef DEBUG_ENDPOINTS
