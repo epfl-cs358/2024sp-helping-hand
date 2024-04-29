@@ -19,6 +19,7 @@
 #include "esp32-hal-ledc.h"
 #include "sdkconfig.h"
 #include "camera_index.h"
+#include <WiFi.h>
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
 #include "esp32-hal-log.h"
@@ -170,6 +171,14 @@ static size_t jpg_encode_stream(void *arg, size_t index, const void *data, size_
     }
     j->len += len;
     return len;
+}
+
+static esp_err_t discovery_handler(httpd_req_t *req)
+{
+    String message = String("CAM,");
+    message += WiFi.macAddress();
+    httpd_resp_send(req, message.c_str(), HTTPD_RESP_USE_STRLEN);
+    return ESP_OK;
 }
 
 static esp_err_t capture_handler(httpd_req_t *req)
@@ -725,6 +734,19 @@ void startCameraServer()
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     config.max_uri_handlers = 16;
 
+    httpd_uri_t discovery_uri = {
+        .uri = "/discovery-hh",
+        .method = HTTP_GET,
+        .handler = discovery_handler,
+        .user_ctx = NULL
+#ifdef CONFIG_HTTPD_WS_SUPPORT
+        ,
+        .is_websocket = false,
+        .handle_ws_control_frames = false,
+        .supported_subprotocol = NULL
+#endif
+    };
+
     httpd_uri_t index_uri = {
         .uri = "/",
         .method = HTTP_GET,
@@ -873,6 +895,7 @@ void startCameraServer()
     log_i("Starting web server on port: '%d'", config.server_port);
     if (httpd_start(&camera_httpd, &config) == ESP_OK)
     {
+        httpd_register_uri_handler(camera_httpd, &discovery_uri);
         httpd_register_uri_handler(camera_httpd, &index_uri);
         httpd_register_uri_handler(camera_httpd, &cmd_uri);
         httpd_register_uri_handler(camera_httpd, &status_uri);
