@@ -32,7 +32,6 @@
 //#define CAMERA_MODEL_DFRobot_FireBeetle2_ESP32S3 // Has PSRAM
 //#define CAMERA_MODEL_DFRobot_Romeo_ESP32S3 // Has PSRAM
 #include "camera_pins.h"
-#define LED_BUILTIN 4
 
 // ===========================
 // Enter your WiFi credentials
@@ -47,8 +46,6 @@ void setup() {
   Serial.begin(115200);
   Serial.setDebugOutput(true);
   Serial.println();
-
-  pinMode(LED_BUILTIN, OUTPUT);
 
   camera_config_t config;
   config.ledc_channel = LEDC_CHANNEL_0;
@@ -156,7 +153,6 @@ void setup() {
 }
 
 void loop() {
-  digitalWrite(LED_BUILTIN, HIGH);
-  Serial.println("Flash on");
+  // Do nothing. Everything is done in another task by the web server
   delay(100000);
 }
