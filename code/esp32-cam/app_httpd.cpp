@@ -19,6 +19,7 @@
 #include "esp32-hal-ledc.h"
 #include "sdkconfig.h"
 #include "camera_index.h"
+#include "debug_endpoints.h"
 #include <WiFi.h>
 
 #if defined(ARDUINO_ARCH_ESP32) && defined(CONFIG_ARDUHAL_ESP_LOG)
@@ -54,6 +55,7 @@ static const char *_STREAM_PART = "Content-Type: image/jpeg\r\nContent-Length: %
 httpd_handle_t stream_httpd = NULL;
 httpd_handle_t camera_httpd = NULL;
 
+#ifdef DEBUG_ENDPOINTS
 typedef struct
 {
     size_t size;  //number of values used for filtering
@@ -99,7 +101,7 @@ static int ra_filter_run(ra_filter_t *filter, int value)
     return filter->sum / filter->count;
 }
 #endif
-
+#endif
 
 #if CONFIG_LED_ILLUMINATOR_ENABLED
 void enable_led(bool en)
@@ -116,6 +118,7 @@ void enable_led(bool en)
 }
 #endif
 
+#ifdef DEBUG_ENDPOINTS
 static esp_err_t bmp_handler(httpd_req_t *req)
 {
     camera_fb_t *fb = NULL;
@@ -157,6 +160,8 @@ static esp_err_t bmp_handler(httpd_req_t *req)
     log_i("BMP: %llums, %uB", (uint64_t)((fr_end - fr_start) / 1000), buf_len);
     return res;
 }
+#endif
+
 
 static size_t jpg_encode_stream(void *arg, size_t index, const void *data, size_t len)
 {
@@ -240,6 +245,8 @@ static esp_err_t capture_handler(httpd_req_t *req)
         return res;
 }
 
+
+#ifdef DEBUG_ENDPOINTS
 static esp_err_t stream_handler(httpd_req_t *req)
 {
     camera_fb_t *fb = NULL;
@@ -728,6 +735,7 @@ static esp_err_t index_handler(httpd_req_t *req)
         return httpd_resp_send_500(req);
     }
 }
+#endif
 
 void startCameraServer()
 {
@@ -747,6 +755,7 @@ void startCameraServer()
 #endif
     };
 
+#ifdef DEBUG_ENDPOINTS
     httpd_uri_t index_uri = {
         .uri = "/",
         .method = HTTP_GET,
@@ -785,6 +794,7 @@ void startCameraServer()
         .supported_subprotocol = NULL
 #endif
     };
+#endif
 
     httpd_uri_t capture_uri = {
         .uri = "/capture",
@@ -799,6 +809,7 @@ void startCameraServer()
 #endif
     };
 
+#ifdef DEBUG_ENDPOINTS
     httpd_uri_t stream_uri = {
         .uri = "/stream",
         .method = HTTP_GET,
@@ -889,17 +900,22 @@ void startCameraServer()
         .supported_subprotocol = NULL
 #endif
     };
+#endif
 
+#ifdef DEBUG_ENDPOINTS
     ra_filter_init(&ra_filter, 20);
+#endif
 
     log_i("Starting web server on port: '%d'", config.server_port);
     if (httpd_start(&camera_httpd, &config) == ESP_OK)
     {
         httpd_register_uri_handler(camera_httpd, &discovery_uri);
+        httpd_register_uri_handler(camera_httpd, &capture_uri);
+
+#ifdef DEBUG_ENDPOINTS
         httpd_register_uri_handler(camera_httpd, &index_uri);
         httpd_register_uri_handler(camera_httpd, &cmd_uri);
         httpd_register_uri_handler(camera_httpd, &status_uri);
-        httpd_register_uri_handler(camera_httpd, &capture_uri);
         httpd_register_uri_handler(camera_httpd, &bmp_uri);
 
         httpd_register_uri_handler(camera_httpd, &xclk_uri);
@@ -907,8 +923,10 @@ void startCameraServer()
         httpd_register_uri_handler(camera_httpd, &greg_uri);
         httpd_register_uri_handler(camera_httpd, &pll_uri);
         httpd_register_uri_handler(camera_httpd, &win_uri);
+#endif
     }
 
+#ifdef DEBUG_ENDPOINTS
     config.server_port += 1;
     config.ctrl_port += 1;
     log_i("Starting stream server on port: '%d'", config.server_port);
@@ -916,6 +934,7 @@ void startCameraServer()
     {
         httpd_register_uri_handler(stream_httpd, &stream_uri);
     }
+#endif
 }
 
 void setupLedFlash(int pin) 

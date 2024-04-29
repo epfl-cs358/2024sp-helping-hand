@@ -1,4 +1,6 @@
+#include "debug_endpoints.h"
 
+#ifdef DEBUG_ENDPOINTS
 
 //File: index_ov2640.html.gz, Size: 6787
 #define index_ov2640_html_gz_len 6787
@@ -1569,3 +1571,4 @@ const uint8_t index_ov5640_html_gz[] = {
  0x42, 0x10, 0x01, 0x00
 };
 
+#endif
