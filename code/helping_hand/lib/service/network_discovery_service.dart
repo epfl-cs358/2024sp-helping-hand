@@ -16,7 +16,7 @@ class NetworkDiscoveryService {
   static const maxId = 256;
 
   static const successCode = 200;
-  static const timeoutDuration = Duration(seconds: 2);
+  static const timeoutDuration = Duration(seconds: 4);
 
   final http.Client client;
 
