@@ -46,6 +46,14 @@ const int SERVO_LONG_DELAY = 1500; //in ms
 const int SERVO_DELAY = 300; //in ms (delay for the servo to go up)
 Servo servo;
 
+//pin for the plotter limit
+const int LIMIT_PIN = 23;
+const int POS_STEP = 5;
+const int CALBRATION_DELAY = 200; //delay between x and y calibration in ms
+
+//plotter position
+int position[2] = {0, 0};
+
 /*
 Setup the servo
 */
@@ -122,16 +130,52 @@ void webServerSetup() {
   Serial.println("Web server started");
 }
 
+/**
+Calibrate the plotter origin
+*/
+void calibrate(){
+  getCoordinates(position);
+  pinMode(LIMIT_PIN, INPUT_PULLUP);
+
+  //x
+  while(!digitalRead(LIMIT_PIN)){
+    position[0] += POS_STEP;
+    goTo(position[0], position[1]);
+  }
+  Serial.println("X");
+  while(digitalRead(LIMIT_PIN)){
+    position[0] -= POS_STEP;
+    goTo(position[0], position[1]);
+  }
+  Serial.println("NX");
+  delay(CALBRATION_DELAY);
+  //y
+  while(!digitalRead(LIMIT_PIN)){
+    position[1] += POS_STEP;
+    goTo(position[0], position[1]);
+  }
+  Serial.println("Y");
+  while(digitalRead(LIMIT_PIN)){
+    position[1] -= POS_STEP;
+    goTo(position[0], position[1]);
+  }
+  Serial.println("NY");
+  position[0] = 0;
+  position[1] = 0;
+  setCoordinates(position);
+}
+
 void setup() {
   Serial.begin(115200);
   Serial.println();
   delay(1000); //delay so that the first string is printed
   Serial.println("HELLO");
   pinMode(LED_BLUE, OUTPUT);
-  wifiSetup();
-  webServerSetup();
   motorsSetup();
   servoSetup();
+  calibrate();
+  wifiSetup();
+  webServerSetup();
 }
 
 /*
