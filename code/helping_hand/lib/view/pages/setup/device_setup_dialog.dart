@@ -1,53 +1,61 @@
 import "package:flutter/material.dart";
 import "package:flutter_hooks/flutter_hooks.dart";
+import "package:helping_hand/model/config/configuration.dart";
 import "package:helping_hand/model/device.dart";
 import "package:helping_hand/view/pages/setup/steps/add_device.dart";
-import "package:helping_hand/view/pages/setup/steps/automatic_camera_setup.dart";
-import "package:helping_hand/view/pages/setup/steps/config_device_discovery.dart";
+import "package:helping_hand/view/pages/setup/steps/automatic_configuration.dart";
+import "package:helping_hand/view/pages/setup/steps/select_remote_device.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
 class DeviceSetupDialog extends HookConsumerWidget {
-  static const _width = 400.0;
-
-  final RemoteDevice device;
-
   const DeviceSetupDialog({
     super.key,
-    required this.device,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final step = useState(0);
-    final config = useState("");
+    final remote = useState<RemoteDevice>(const RemoteDevice.none());
+    final config = useState(const RemoteConfiguration.empty());
 
-    return SingleChildScrollView(
-      child: SizedBox(
-        width: _width,
-        child: Stepper(
-          currentStep: step.value,
-          controlsBuilder: (context, details) => const Row(),
-          steps: [
-            Step(
-              title: const Text("Select Configuration Camera"),
-              content: ConfigDeviceDiscovery(step: step),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Add New Remote"),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(Icons.close),
+          ),
+        ],
+      ),
+      body: Stepper(
+        currentStep: step.value,
+        controlsBuilder: (context, details) => const Row(),
+        steps: [
+          Step(
+            title: const Text("Select Remote Device"),
+            content: SelectRemoteDevice(
+              step: step,
+              remote: remote,
             ),
-            Step(
-              title: const Text("Automatic Setup"),
-              content: AutomaticCameraSetup(
-                step: step,
-                config: config,
-              ),
+          ),
+          Step(
+            title: const Text("Automatic Configuration"),
+            content: AutomaticConfiguration(
+              step: step,
+              config: config,
             ),
-            Step(
-              title: const Text("Add Device"),
-              content: AddDevice(
-                device: device,
-                config: config.value,
-              ),
+          ),
+          Step(
+            title: const Text("Add Device"),
+            content: AddDevice(
+              remote: remote.value,
+              config: config.value,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

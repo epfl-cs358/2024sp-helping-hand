@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:helping_hand/view/pages/overview.dart";
+import "package:helping_hand/view/pages/overview/overview.dart";
 
 enum Routes {
   overview("overview");

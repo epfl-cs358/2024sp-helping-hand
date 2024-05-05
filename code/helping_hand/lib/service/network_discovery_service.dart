@@ -3,63 +3,70 @@ import "package:helping_hand/model/network.dart";
 import "package:helping_hand/service/fake/fake_http_client.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:http/http.dart" as http;
-import "package:stream_transform/stream_transform.dart";
 
-class NetworkDiscoveryService {
+class NetworkDeviceService {
   static const discoveryEndpoint = "discovery-hh";
 
   static const configPrefix = "CAM";
   static const remotePrefix = "PLO";
   static const protocolSeparator = ",";
 
-  static const subnet = 1;
-  static const maxId = 256;
-
   static const successCode = 200;
-  static const timeoutDuration = Duration(seconds: 4);
+  static const timeoutDuration = Duration(seconds: 3);
+
+  static final povider = Provider(
+    (ref) => NetworkDeviceService(
+      client: FakeHttpClient(),
+      // client: http.Client(),
+    ),
+  );
 
   final http.Client client;
 
-  NetworkDiscoveryService({
+  NetworkDeviceService({
     required this.client,
   });
 
-  Stream<NetworkDevice> _candidateDevices() async* {
-    for (var id = 0; id < maxId; id++) {
-      yield NetworkDevice(subnet: subnet, id: id);
-    }
-  }
+  Future<({String prefix, NetworkDevice network})> _deviceWithIp(
+    IpAddress ipAddress,
+  ) =>
+      client
+          .get(Uri.http(ipAddress, discoveryEndpoint))
+          .timeout(timeoutDuration)
+          .then((value) {
+        if (value.statusCode != successCode) {
+          throw Exception("Device is not available.");
+        }
 
-  Stream<ActiveLanDevice> _prefixDevices(String prefix) => _candidateDevices()
-      .concurrentAsyncMap((candidate) async => (
-            device: candidate,
-            response: await client
-                .get(candidate.uri.resolve(discoveryEndpoint))
-                .timeout(timeoutDuration),
-          ))
-      .handleError((_) {})
-      .where((e) =>
-          e.response.statusCode == successCode &&
-          e.response.body.startsWith(prefix))
-      .map((e) => ActiveLanDevice(
-            lan: e.device,
-            macAddress: e.response.body.split(protocolSeparator)[1],
-          ));
+        final split = value.body.split(protocolSeparator);
+        return (
+          prefix: split[0],
+          network: NetworkDevice(ipAddress: ipAddress, macAddress: split[1]),
+        );
+      });
 
-  Future<ConfigDevice> getLocalConfigDevice() async =>
-      _prefixDevices(configPrefix)
-          .map((value) => ConfigDevice(network: value))
-          .first;
+  Future<NetworkDevice> _deviceWithIpPrefix(
+    IpAddress ipAddress,
+    String prefix,
+  ) =>
+      _deviceWithIp(ipAddress).then((device) {
+        if (device.prefix != prefix) {
+          throw Exception("Device of wrong type.");
+        }
 
-  Future<List<RemoteDevice>> getLocalRemoteDevices() async =>
-      _prefixDevices(remotePrefix)
-          .map((value) => RemoteDevice(network: value))
-          .toList();
+        return device.network;
+      });
+
+  Future<RemoteDevice> remoteWithIp(IpAddress ipAddress) =>
+      _deviceWithIpPrefix(ipAddress, remotePrefix)
+          .then((network) => RemoteDevice(network: network));
+
+  Future<ConfigDevice> configWithIp(IpAddress ipAddress) =>
+      _deviceWithIpPrefix(ipAddress, configPrefix)
+          .then((network) => ConfigDevice(network: network));
+
+  Future<bool> remoteIsOnline(RemoteDevice remote) => remoteWithIp(
+          remote.network.ipAddress)
+      .then((device) => remote.network.macAddress == device.network.macAddress)
+      .onError((error, stackTrace) => false);
 }
-
-final discoveryServiceProvider = Provider(
-  (ref) => NetworkDiscoveryService(
-    client: FakeHttpClient(),
-    // client: http.Client(),
-  ),
-);

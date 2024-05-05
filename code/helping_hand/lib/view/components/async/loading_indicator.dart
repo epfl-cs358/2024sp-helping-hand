@@ -1,16 +1,21 @@
 import "package:flutter/material.dart";
 
 class LoadingIndicator extends StatelessWidget {
-  static const side = 40.0;
+  static const _side = 40.0;
 
-  const LoadingIndicator({super.key});
+  final double side;
+
+  const LoadingIndicator({
+    super.key,
+    this.side = _side,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return const SizedBox(
+    return SizedBox(
       width: side,
       height: side,
-      child: CircularProgressIndicator(),
+      child: const CircularProgressIndicator(),
     );
   }
 }
