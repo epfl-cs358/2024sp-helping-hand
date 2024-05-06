@@ -1,12 +1,15 @@
+import "package:flutter/foundation.dart";
 import "package:helping_hand/model/network.dart";
 import "package:helping_hand/service/network_discovery_service.dart";
+import "package:helping_hand/service/remote_controller_service.dart";
 import "package:http/http.dart" as http;
 
 class FakeHttpClient extends http.BaseClient {
   static const _fakeHttpDelay = Duration(seconds: 1);
+  static const _fakeMovementDelay = Duration(milliseconds: 500);
 
-  static const _fakeConfigId = [200];
-  static const _fakeRemotesId = [32, 121];
+  static const _fakeRemotesId = [1, 2];
+  static const _fakeConfigId = [3];
 
   static final _fakeRemotes = _fakeRemotesId.map(
     (id) => NetworkDevice(
@@ -28,17 +31,20 @@ class FakeHttpClient extends http.BaseClient {
 
   @override
   Future<http.StreamedResponse> send(http.BaseRequest request) async {
-    await Future.delayed(_fakeHttpDelay);
-
     final url = request.url.toString();
 
-    print(url);
+    if (kDebugMode) {
+      print(url);
+    }
+
+    await Future.delayed(_fakeHttpDelay);
 
     for (final cam in _fakeCams) {
       if (url.contains(cam.ipAddress) &&
           url.contains(NetworkDeviceService.discoveryEndpoint)) {
         return _answerWith(
-            "${NetworkDeviceService.configPrefix},${cam.macAddress}");
+          "${NetworkDeviceService.configPrefix},${cam.macAddress}",
+        );
       }
     }
 
@@ -46,7 +52,18 @@ class FakeHttpClient extends http.BaseClient {
       if (url.contains(remote.ipAddress) &&
           url.contains(NetworkDeviceService.discoveryEndpoint)) {
         return _answerWith(
-            "${NetworkDeviceService.remotePrefix},${remote.macAddress}");
+          "${NetworkDeviceService.remotePrefix},${remote.macAddress}",
+        );
+      }
+
+      if (url.contains(RemoteControllerService.moveEndpoint) ||
+          url.contains(RemoteControllerService.moveOutEndpoint)) {
+        await Future.delayed(_fakeMovementDelay);
+        return _answerWith("");
+      }
+
+      if (url.contains(RemoteControllerService.shortPressEndoint)) {
+        return _answerWith("");
       }
     }
 

@@ -12,15 +12,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Brightness brightness = MediaQuery.platformBrightnessOf(context);
     final theme = ThemeData(
       useMaterial3: true,
-      // Define the default brightness and colors.
       colorScheme: ColorScheme.fromSeed(
         seedColor: Colors.blue,
-        brightness: brightness,
+        brightness: Brightness.dark,
       ),
       fontFamily: GoogleFonts.roboto().fontFamily,
+      appBarTheme: const AppBarTheme(
+        foregroundColor: Colors.white,
+      ),
     );
 
     return ProviderScope(
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: generateRoute,
         initialRoute: Routes.overview.name,
         theme: theme,
+        debugShowCheckedModeBanner: false,
       ),
     );
   }

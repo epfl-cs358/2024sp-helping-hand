@@ -34,9 +34,14 @@ class SavedRemoteNotifier extends FamilyAsyncNotifier<SavedRemote, MacAddress> {
     );
   }
 
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    ref.invalidateSelf();
+  }
+
   Future<void> delete() async {
     final db = await ref.watch(DatabaseService.povider.future);
     await db.removeRemote(arg);
-    ref.invalidate(SavedRemotesNotifier.provider);
+    await ref.read(SavedRemotesNotifier.provider.notifier).refresh();
   }
 }

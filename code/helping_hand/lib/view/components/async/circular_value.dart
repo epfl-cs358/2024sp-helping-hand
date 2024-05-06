@@ -1,9 +1,15 @@
 import "package:flutter/material.dart";
 import "package:helping_hand/view/components/async/error_dialog.dart";
+import "package:helping_hand/view/components/async/loading_indicator.dart";
+import "package:helping_hand/view/pages/overview/overview_page.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
 class CircularValue<T> extends StatelessWidget {
   static const debugErrorTag = "DEBUG";
+  static const loadingIndicator = LoadingIndicator(
+    color: OverviewPage.appBarColor,
+    side: 50,
+  );
 
   final AsyncValue<T> value;
   final Widget Function(BuildContext context, T data) builder;
@@ -17,9 +23,7 @@ class CircularValue<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return value.when(
-      loading: () => const Center(
-        child: CircularProgressIndicator(),
-      ),
+      loading: () => const Center(child: loadingIndicator),
       data: (data) => builder(context, data),
       error: (error, stackTrace) {
         final errorText = error.toString();
@@ -30,7 +34,10 @@ class CircularValue<T> extends StatelessWidget {
 
         final dialog = ErrorDialog(error: errorText);
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          showDialog(context: context, builder: dialog.build);
+          showDialog(
+            context: context,
+            builder: (context) => dialog,
+          );
         });
 
         return const SizedBox.shrink();

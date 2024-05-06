@@ -1,8 +1,11 @@
 import "package:flutter/material.dart";
-import "package:helping_hand/view/pages/overview/overview.dart";
+import "package:helping_hand/model/network.dart";
+import "package:helping_hand/view/pages/overview/overview_page.dart";
+import "package:helping_hand/view/pages/remote/remote_page.dart";
 
 enum Routes {
-  overview("overview");
+  overview("overview"),
+  remote("remote");
 
   final String name;
 
@@ -16,6 +19,8 @@ enum Routes {
     switch (this) {
       case overview:
         return const OverviewPage();
+      case remote:
+        return RemotePage(mac: args as MacAddress);
     }
   }
 }

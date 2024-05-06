@@ -24,13 +24,13 @@ class DatabaseService {
         );
       }
 
-      return DatabaseService(
+      return DatabaseService._(
         sharedPreferences: sharedPreferences,
       );
     },
   );
 
-  DatabaseService({required this.sharedPreferences});
+  DatabaseService._({required this.sharedPreferences});
 
   List<MacAddress> getAllMacAddresses() =>
       sharedPreferences.getStringList(remotesMacAddressesCollection)!;

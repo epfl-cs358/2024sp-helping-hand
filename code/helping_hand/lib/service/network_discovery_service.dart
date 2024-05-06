@@ -1,6 +1,6 @@
 import "package:helping_hand/model/device.dart";
 import "package:helping_hand/model/network.dart";
-import "package:helping_hand/service/fake/fake_http_client.dart";
+import "package:helping_hand/state/http_client.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 import "package:http/http.dart" as http;
 
@@ -15,15 +15,14 @@ class NetworkDeviceService {
   static const timeoutDuration = Duration(seconds: 3);
 
   static final povider = Provider(
-    (ref) => NetworkDeviceService(
-      client: FakeHttpClient(),
-      // client: http.Client(),
+    (ref) => NetworkDeviceService._(
+      client: ref.watch(httpClientProvider),
     ),
   );
 
   final http.Client client;
 
-  NetworkDeviceService({
+  NetworkDeviceService._({
     required this.client,
   });
 
@@ -65,8 +64,10 @@ class NetworkDeviceService {
       _deviceWithIpPrefix(ipAddress, configPrefix)
           .then((network) => ConfigDevice(network: network));
 
-  Future<bool> remoteIsOnline(RemoteDevice remote) => remoteWithIp(
-          remote.network.ipAddress)
-      .then((device) => remote.network.macAddress == device.network.macAddress)
-      .onError((error, stackTrace) => false);
+  Future<bool> remoteIsOnline(RemoteDevice remote) =>
+      remoteWithIp(remote.network.ipAddress)
+          .then(
+            (device) => remote.network.macAddress == device.network.macAddress,
+          )
+          .onError((error, stackTrace) => false);
 }

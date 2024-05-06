@@ -6,7 +6,8 @@ import "package:hooks_riverpod/hooks_riverpod.dart";
 class SavedRemotesNotifier extends AsyncNotifier<List<SavedRemote>> {
   static final provider =
       AsyncNotifierProvider<SavedRemotesNotifier, List<SavedRemote>>(
-          SavedRemotesNotifier.new);
+    SavedRemotesNotifier.new,
+  );
 
   @override
   Future<List<SavedRemote>> build() async {
@@ -22,7 +23,9 @@ class SavedRemotesNotifier extends AsyncNotifier<List<SavedRemote>> {
     );
   }
 
-  void refresh() {
+  Future<void> refresh() async {
+    state = const AsyncValue.loading();
+    state = await AsyncValue.guard(() => build());
     state.maybeWhen(
       data: (data) {
         for (final remote in data) {
@@ -42,11 +45,13 @@ class SavedRemotesNotifier extends AsyncNotifier<List<SavedRemote>> {
     final db = await ref.watch(DatabaseService.povider.future);
     await db.setRemoteData(remote);
 
-    ref.invalidate(
-      SavedRemoteNotifier.provider(
-        remote.device.network.macAddress,
-      ),
-    );
+    ref
+        .read(
+          SavedRemoteNotifier.provider(
+            remote.device.network.macAddress,
+          ).notifier,
+        )
+        .refresh();
     ref.invalidateSelf();
   }
 }
