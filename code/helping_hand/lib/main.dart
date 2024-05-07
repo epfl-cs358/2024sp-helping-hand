@@ -4,6 +4,8 @@ import "package:helping_hand/view/navigation/routes.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
 void main() {
+  GoogleFonts.config.allowRuntimeFetching = false;
+
   runApp(const MyApp());
 }
 

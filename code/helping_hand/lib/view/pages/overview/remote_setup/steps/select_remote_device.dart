@@ -54,7 +54,8 @@ class SelectRemoteDevice extends HookConsumerWidget {
                     await networkService.remoteWithIp(ipController.text);
                 confirmState.value = SimpleRequestState.valid;
                 step.value++;
-              } catch (_) {
+              } catch (e) {
+                print(e);
                 error.value = "Remote device not reachable.";
                 confirmState.value = SimpleRequestState.still;
               }
