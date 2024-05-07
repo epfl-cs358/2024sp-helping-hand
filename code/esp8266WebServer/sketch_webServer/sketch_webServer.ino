@@ -28,12 +28,12 @@ const char* appNamespace = "web-server";
 Preferences preferences;
 
 //motors parameters: DO NOT USE 25 & 26 pins
-AccelStepper X(MotorInterfaceType, 16, 17); //16: step, 17: direction
+AccelStepper X(MotorInterfaceType, 0, 4); //16: step, 17: direction
 AccelStepper Y(MotorInterfaceType, 32, 33); //32: step, 33: direction
 MultiStepper XY;
-#define MOTOR_MAX_SPEED 1000.0
-const int MAX_X = 2000;
-const int MAX_Y = 2000;
+#define MOTOR_MAX_SPEED 300.0
+const int MAX_X = 850;
+const int MAX_Y = 530;
 const int MOVE_OUT_X = 0;
 const int MOVE_OUT_Y = 0;
 
@@ -119,6 +119,7 @@ const char* discoveryPath = "/discovery-hh";
 Setup the web server
 */
 void webServerSetup() {
+  server.enableCORS();
   server.on(F(rootPath), handleRoot);
   server.on(F(moveToPath), handleMoveTo);
   server.on(F(shortPressPath), handleShortPress);
@@ -134,35 +135,37 @@ void webServerSetup() {
 Calibrate the plotter origin
 */
 void calibrate(){
-  getCoordinates(position);
+  //getCoordinates(position);
   pinMode(LIMIT_PIN, INPUT_PULLUP);
 
   //x
   while(!digitalRead(LIMIT_PIN)){
-    position[0] += POS_STEP;
+    position[0] -= POS_STEP;
     goTo(position[0], position[1]);
   }
   Serial.println("X");
   while(digitalRead(LIMIT_PIN)){
-    position[0] -= POS_STEP;
+    position[0] += POS_STEP;
     goTo(position[0], position[1]);
   }
   Serial.println("NX");
   delay(CALBRATION_DELAY);
   //y
   while(!digitalRead(LIMIT_PIN)){
-    position[1] += POS_STEP;
+    position[1] -= POS_STEP;
     goTo(position[0], position[1]);
   }
   Serial.println("Y");
   while(digitalRead(LIMIT_PIN)){
-    position[1] -= POS_STEP;
+    position[1] += POS_STEP;
     goTo(position[0], position[1]);
   }
   Serial.println("NY");
   position[0] = 0;
   position[1] = 0;
-  setCoordinates(position);
+  X.setCurrentPosition(0);
+  Y.setCurrentPosition(0);
+  //setCoordinates(position);
 }
 
 void setup() {
@@ -191,22 +194,22 @@ void goTo(int x, int y) {
 /**
 Get the coordinates of the plotter (from memory)
 */
-void getCoordinates(int* result) {
+/*void getCoordinates(int* result) {
   preferences.begin(appNamespace);
   result[0] = preferences.getInt("x", 0);
   result[1] = preferences.getInt("y", 0);
   preferences.end();
-}
+}*/
 
 /**
 Set the coordinates of the plotter (to memory)
 */
-void setCoordinates(int* coordinates){
+/*void setCoordinates(int* coordinates){
   preferences.begin(appNamespace);
   preferences.putInt("x", coordinates[0]);
   preferences.putInt("y", coordinates[1]);
   preferences.end();
-}
+}*/
 
 /**
 convert coordinates to string
@@ -221,10 +224,10 @@ Handle the web page at /
 void handleRoot() {
   digitalWrite(LED_BLUE, HIGH);
   if(isGet()){
-    int coordinates[2] = {0, 0};
-    getCoordinates(coordinates);
+    //int coordinates[2] = {0, 0};
+    //getCoordinates(coordinates);
     char str[COORDSTRINGSIZE];
-    coordinatesToString(coordinates, str);
+    coordinatesToString(position, str);
     String message = String("hello world\n");
     message += str;
     server.send(200, F("text/plain"), message.c_str());
@@ -245,8 +248,12 @@ void handleMoveTo() {
     if(coord[1] < 0) coord[1] = 0;
     if(coord[0] > MAX_X) coord[0] = MAX_X;
     if(coord[1] > MAX_Y) coord[1] = MAX_Y;
-    setCoordinates(coord);
+    //setCoordinates(coord);
+    position[0] = coord[0];
+    position[1] = coord[1];
     goTo(coord[0], coord[1]);
+    Serial.println(coord[0]);
+    Serial.println(coord[1]);
     server.send(200, F("text/plain"), "OK");
   }
   digitalWrite(LED_BLUE, LOW);
@@ -269,7 +276,9 @@ void handleDiscovery() {
 void handleMoveOut() {
   goTo(MOVE_OUT_X, MOVE_OUT_Y);
   int coord[2] = {MOVE_OUT_X, MOVE_OUT_Y};
-  setCoordinates(coord);
+  //setCoordinates(coord);
+  position[0] = 0;
+  position[1] = 0;
   server.send(200, F("text/plain"), "OK");
 }
 
