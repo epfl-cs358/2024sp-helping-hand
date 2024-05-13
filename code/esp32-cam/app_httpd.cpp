@@ -36,7 +36,7 @@
 #define LED_LEDC_CHANNEL 2 //Using different ledc channel/timer than camera
 #define CONFIG_LED_MAX_INTENSITY 255
 
-int led_duty = 0;
+int led_duty = 127; // initial led flash intensity
 bool isStreaming = false;
 
 #endif
