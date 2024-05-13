@@ -51,4 +51,3 @@ def process_image(image_bytes):
 
     si.seek(0)
     return si.getvalue()
-
