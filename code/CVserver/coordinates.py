@@ -40,7 +40,7 @@ def _camera_to_plotter(x, y):
     # Apply perspective transformation
     res_point = perspective_matrix @ src_point
 
-    return res_point[0] / res_point[2], res_point[1] / res_point[2]
+    return int(res_point[0] / res_point[2]), int(res_point[1] / res_point[2])
 
 
 def _is_inside_remote_area(button):
