@@ -1,4 +1,3 @@
-import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
@@ -64,13 +63,13 @@ def show_points_conversion(camera_ax, plotter_ax, points):
 
     # plotter points (fake buttons with empty label)
     test_buttons = [("", *coords) for coords in points]
-    converted_points = map_buttons(test_buttons)
+    converted_points = buttons_coordinates(test_buttons)
     for i, (_, x, y) in enumerate(converted_points):
         plotter_ax.plot(x, y, "o", color=cmap(i))
 
 
 def main():
-    fig, (left, right) = plt.subplots(1, 2)
+    _, (left, right) = plt.subplots(1, 2)
 
     # origin to top left
     left.invert_yaxis()
