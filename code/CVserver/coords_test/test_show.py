@@ -8,6 +8,7 @@ sys.path.append("..")
 
 from coordinates import *
 
+
 MARKERS_FILE = "markers.jpg"
 
 # test points measured in pixels in the camera's coordinates
@@ -61,10 +62,12 @@ def show_points_conversion(camera_ax, plotter_ax, points):
     for i, (x, y) in enumerate(points):
         camera_ax.plot(x, y, "o", color=cmap(i))
 
-    # plotter points
-    converted_points = map_points(points)
-    for i, (x, y) in enumerate(converted_points):
+    # plotter points (fake buttons with empty label)
+    test_buttons = [("", *coords) for coords in points]
+    converted_points = map_buttons(test_buttons)
+    for i, (_, x, y) in enumerate(converted_points):
         plotter_ax.plot(x, y, "o", color=cmap(i))
+
 
 def main():
     fig, (left, right) = plt.subplots(1, 2)

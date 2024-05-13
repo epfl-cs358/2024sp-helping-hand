@@ -1,7 +1,5 @@
 import cv2
-import csv
 import numpy as np
-from io import StringIO
 
 
 def process_image(image_bytes):
@@ -27,10 +25,9 @@ def process_image(image_bytes):
     # Find contours
     contours, _ = cv2.findContours(edges, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-    # CSV file
-    si = StringIO()
-    cw = csv.writer(si)
-    cw.writerow(['label', 'x', 'y'])
+    # Result
+    buttons = []
+
 
     # Calculate the center point for each contour and write to CSV file
     for contour in contours:
@@ -38,7 +35,7 @@ def process_image(image_bytes):
         if M["m00"] != 0:
             cX = int(M["m10"] / M["m00"])
             cY = int(M["m01"] / M["m00"])
-            cw.writerow(["Button", cX, cY])  # Check if it is appropriate to label each coutour a button?
+            buttons.append(["Button", cX, cY])  # Check if it is appropriate to label each coutour a button?
             # This is to draw the contours and the center points
             cv2.drawContours(img, [contour], -1, (0, 255, 0), 2)
             cv2.circle(img, (cX, cY), 5, (255, 0, 0), -1)
@@ -49,5 +46,4 @@ def process_image(image_bytes):
     # cv2.destroyAllWindows()
     cv2.imwrite('sketch.png', img)
 
-    si.seek(0)
-    return si.getvalue()
+    return buttons

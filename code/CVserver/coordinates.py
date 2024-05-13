@@ -43,7 +43,9 @@ def _camera_to_plotter(x, y):
     return res_point[0] / res_point[2], res_point[1] / res_point[2]
 
 
-def _is_inside_remote_area(point):
+def _is_inside_remote_area(button):
+    point = button[1:]
+
     for axis in range(len(point)):
         coord = point[axis]
         if REMOTE_AREA_ORIGIN[axis] > coord or coord > REMOTE_AREA_LIMIT[axis]:
@@ -52,18 +54,21 @@ def _is_inside_remote_area(point):
     return True
 
 
-def map_points(points):
+def buttons_coordinates(buttons, filtered=True):
     """
     Maps a list of points from pixel coordinates to plotter coordinates.
     Performs the perspective correction algorithm.
     Filters out points outside of the remote area.
     """
 
+    # change coordinates
     mapped_points = [
-        _camera_to_plotter(x, y)
-        for (x, y) in points
+        (label, *_camera_to_plotter(x, y))
+        for label, x, y in buttons
     ]
 
-    filterred_points = list(filter(_is_inside_remote_area, mapped_points))
+    # filter inside the remote area
+    if filtered:
+        mapped_points = list(filter(_is_inside_remote_area, mapped_points))
 
-    return filterred_points
+    return mapped_points
