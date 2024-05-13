@@ -11,7 +11,10 @@ class AutomaticConfigService {
   static const configPictureEndpoint = "capture";
 
   static const cvServerConfigEndopint = "analyse";
-  static final cvServerUri = Uri.http("192.168.1.4", cvServerConfigEndopint);
+  static final cvServerUri = Uri.http(
+    "192.168.1.117:5005",
+    cvServerConfigEndopint,
+  );
 
   static const timeoutDuration = Duration(seconds: 5);
 
@@ -41,7 +44,7 @@ class AutomaticConfigService {
     return base64.encode(response.bodyBytes);
   }
 
-  Future<String> _analyzeConfig(String picture) async {
+  Future<String> _analyzePicture(String picture) async {
     final response =
         await client.post(cvServerUri, body: picture).timeout(timeoutDuration);
 
@@ -54,8 +57,8 @@ class AutomaticConfigService {
 
   Future<RemoteConfiguration> automaticConfig(ConfigDevice configDevice) async {
     final config = await _requestPicture(configDevice)
-        .then((picture) => _analyzeConfig(picture));
+        .then((picture) => _analyzePicture(picture));
 
-    return RemoteConfiguration(csvConfig: config);
+    return RemoteConfiguration.fromSerialized(config);
   }
 }
