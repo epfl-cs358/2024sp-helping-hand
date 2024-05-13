@@ -19,5 +19,6 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 `GND` and `IO0` need to be connected while powering on the ESP for it to boot in flashable mode. Use a cable to connect them. To boot the flashed program, remove the cable and reboot (i.e. power cycle) the ESP with the two pins not connected.
 
 ### Wiring
+![wiring schema for flashing](../../documentation/electric-schema/esp32-cam-flashing.png)
 as described in the Course Handbook in Chapter 25.4  
 note the two pins that need to be bridged (only) during flashing
