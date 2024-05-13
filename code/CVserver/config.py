@@ -12,8 +12,8 @@ from coordinates import buttons_coordinates
 # Currently available algorithms (python files):
 #     - edge_detection
 
-from edge_detection import process_image
-
+#from edge_detection import process_image
+from sam import process_image
 
 CSV_SEPARATOR = ","
 CSV_NEWLINE = "\n"
