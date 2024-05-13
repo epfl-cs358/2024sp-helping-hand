@@ -1,5 +1,5 @@
 import base64
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify, Response, make_response
 from config import image_to_config
 
 
@@ -15,8 +15,15 @@ def analyse():
         return "image error", 400
 
     img_data = base64.b64decode(b64_img)
+    config = image_to_config(img_data)
 
-    return image_to_config(img_data)
+    response = make_response(config)
+    response.headers.add("Access-Control-Allow-Origin", "*")
+    response.headers.add("Access-Control-Allow-Credentials", "true")
+    response.headers.add("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+    response.headers.add("Access-Control-Max-Age", "1000")
+    response.headers.add("Access-Control-Allow-Headers", "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale")
+    return response
 
 
 # human friendly endpoint to test using an image file upload
