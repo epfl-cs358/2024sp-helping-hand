@@ -28,12 +28,12 @@ const char* appNamespace = "web-server";
 Preferences preferences;
 
 //motors parameters: DO NOT USE 25 & 26 pins
-AccelStepper X(MotorInterfaceType, 0, 4); //16: step, 17: direction
+AccelStepper X(MotorInterfaceType, 0, 4); //0: step, 4: direction
 AccelStepper Y(MotorInterfaceType, 32, 33); //32: step, 33: direction
 MultiStepper XY;
 #define MOTOR_MAX_SPEED 300.0
-const int MAX_X = 850;
-const int MAX_Y = 530;
+const int MAX_X = 530;
+const int MAX_Y = 850;
 const int MOVE_OUT_X = 0;
 const int MOVE_OUT_Y = 0;
 
@@ -135,7 +135,6 @@ void webServerSetup() {
 Calibrate the plotter origin
 */
 void calibrate(){
-  //getCoordinates(position);
   pinMode(LIMIT_PIN, INPUT_PULLUP);
 
   //x
@@ -165,7 +164,6 @@ void calibrate(){
   position[1] = 0;
   X.setCurrentPosition(0);
   Y.setCurrentPosition(0);
-  //setCoordinates(position);
 }
 
 void setup() {
@@ -192,26 +190,6 @@ void goTo(int x, int y) {
 }
 
 /**
-Get the coordinates of the plotter (from memory)
-*/
-/*void getCoordinates(int* result) {
-  preferences.begin(appNamespace);
-  result[0] = preferences.getInt("x", 0);
-  result[1] = preferences.getInt("y", 0);
-  preferences.end();
-}*/
-
-/**
-Set the coordinates of the plotter (to memory)
-*/
-/*void setCoordinates(int* coordinates){
-  preferences.begin(appNamespace);
-  preferences.putInt("x", coordinates[0]);
-  preferences.putInt("y", coordinates[1]);
-  preferences.end();
-}*/
-
-/**
 convert coordinates to string
 */
 void coordinatesToString(int* coordinates, char result[COORDSTRINGSIZE]){
@@ -224,8 +202,6 @@ Handle the web page at /
 void handleRoot() {
   digitalWrite(LED_BLUE, HIGH);
   if(isGet()){
-    //int coordinates[2] = {0, 0};
-    //getCoordinates(coordinates);
     char str[COORDSTRINGSIZE];
     coordinatesToString(position, str);
     String message = String("hello world\n");
@@ -248,7 +224,6 @@ void handleMoveTo() {
     if(coord[1] < 0) coord[1] = 0;
     if(coord[0] > MAX_X) coord[0] = MAX_X;
     if(coord[1] > MAX_Y) coord[1] = MAX_Y;
-    //setCoordinates(coord);
     position[0] = coord[0];
     position[1] = coord[1];
     goTo(coord[0], coord[1]);
@@ -276,7 +251,6 @@ void handleDiscovery() {
 void handleMoveOut() {
   goTo(MOVE_OUT_X, MOVE_OUT_Y);
   int coord[2] = {MOVE_OUT_X, MOVE_OUT_Y};
-  //setCoordinates(coord);
   position[0] = 0;
   position[1] = 0;
   server.send(200, F("text/plain"), "OK");
