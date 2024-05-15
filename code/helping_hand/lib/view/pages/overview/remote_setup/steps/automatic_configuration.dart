@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 import "package:flutter_hooks/flutter_hooks.dart";
 import "package:helping_hand/model/config/configuration.dart";
+import "package:helping_hand/service/automatic_config_service.dart";
 import "package:helping_hand/service/network_discovery_service.dart";
 import "package:helping_hand/utils/types.dart";
 import "package:helping_hand/view/components/async/loading_indicator.dart";
@@ -24,13 +25,15 @@ class AutomaticConfiguration extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final networkService = ref.watch(NetworkDeviceService.povider);
+    final automaticConfigService = ref.watch(AutomaticConfigService.povider);
+
     final error = useState<String?>(null);
     final ipController =
         useTextEditingController(text: SelectRemoteDevice.defaultIp);
     final confirmState = useState(SimpleRequestState.still);
 
     const subtitle = Text(
-      "Select the camera IP address:",
+      "Install the configuration module.\nSelect the camera IP address:",
       style: TextStyle(fontSize: ButtonPrimary.textSize),
     );
 
@@ -53,7 +56,18 @@ class AutomaticConfiguration extends HookConsumerWidget {
         try {
           final configDevice =
               await networkService.configWithIp(ipController.text);
-          // TODO perform automatic configuration
+
+          try {
+            final automaticConfig =
+                await automaticConfigService.automaticConfig(configDevice);
+
+            config.value = automaticConfig;
+          } catch (e) {
+            error.value = "Error with automatic configuration.";
+            confirmState.value = SimpleRequestState.still;
+            return;
+          }
+
           confirmState.value = SimpleRequestState.valid;
           step.value++;
         } catch (_) {

@@ -32,3 +32,4 @@ flutter:
 
   assets:
     - assets/google_fonts/
+    - assets/default_image.jpg
