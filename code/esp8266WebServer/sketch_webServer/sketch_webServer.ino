@@ -5,13 +5,13 @@ credits:
 WiFiWebServer usage: https://github.com/khoih-prog/WiFiWebServer/tree/master
 Preferences usage: https://github.com/vshymanskyy/Preferences
 */
-#include <ESPmDNS.h>
+//#include <ESPmDNS.h>
 #include <Preferences.h>
 #include <WiFi.h>
 #include <WebServer.h>
 #include <AccelStepper.h>
 #include <MultiStepper.h>
-#include <ESP32Servo.h>
+//#include <Servo.h>
 #define MotorInterfaceType 1
 
 //blue led port
@@ -29,10 +29,10 @@ Preferences preferences;
 
 //motors parameters: DO NOT USE 25 & 26 pins
 AccelStepper X(MotorInterfaceType, 0, 4); //0: step, 4: direction
-AccelStepper Y(MotorInterfaceType, 32, 33); //32: step, 33: direction
+AccelStepper Y(MotorInterfaceType, 20, 21); //32: step, 33: direction
 MultiStepper XY;
 #define MOTOR_MAX_SPEED 300.0
-const int MAX_X = 530;
+const int MAX_X = 380;
 const int MAX_Y = 850;
 const int MOVE_OUT_X = 0;
 const int MOVE_OUT_Y = 0;
@@ -44,7 +44,7 @@ const int PRESS_ANGLE = 190;
 const int SERVO_SHORT_DELAY = 300; //in ms
 const int SERVO_LONG_DELAY = 1500; //in ms
 const int SERVO_DELAY = 300; //in ms (delay for the servo to go up)
-Servo servo;
+//Servo servo;
 
 //pin for the plotter limit
 const int LIMIT_PIN = 23;
@@ -58,8 +58,8 @@ int position[2] = {0, 0};
 Setup the servo
 */
 void servoSetup() {
-  servo.attach(SERVO_PIN);
-  servo.write(UP_ANGLE);
+//  servo.attach(SERVO_PIN);
+//  servo.write(UP_ANGLE);
 }
 
 /*
@@ -94,11 +94,11 @@ void wifiSetup() {
     delay(500);
     Serial.print(".");
   }
-  if (!MDNS.begin(hostname)) {   // Set the hostname to hostname + ".local"
+  /*if (!MDNS.begin(hostname)) {   // Set the hostname to hostname + ".local"
     Serial.println("Error setting up the hostname (MDNS)!");
   } else {
     Serial.println();
-  }
+  }*/
   Serial.print("Connected\nIP address: ");
   Serial.println(WiFi.localIP());
   Serial.print("Hostname: ");
@@ -167,7 +167,7 @@ void calibrate(){
 }
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   Serial.println();
   delay(1000); //delay so that the first string is printed
   Serial.println("HELLO");
@@ -258,19 +258,19 @@ void handleMoveOut() {
 
 //execute short press
 void handleShortPress() {
-  servo.write(PRESS_ANGLE);
+/*  servo.write(PRESS_ANGLE);
   delay(SERVO_SHORT_DELAY);
   servo.write(UP_ANGLE);
-  delay(SERVO_DELAY);
+  delay(SERVO_DELAY);*/
   server.send(200, F("text/plain"), "OK");
 }
 
 //execute long press
 void handleLongPress() {
-  servo.write(PRESS_ANGLE);
+/*  servo.write(PRESS_ANGLE);
   delay(SERVO_LONG_DELAY);
   servo.write(UP_ANGLE);
-  delay(SERVO_DELAY);
+  delay(SERVO_DELAY);*/
   server.send(200, F("text/plain"), "OK");
 }
 
