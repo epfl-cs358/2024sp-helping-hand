@@ -6,7 +6,7 @@ import cv2
 def process_image(image_file):
     masks = analyse_and_extract_masks(image_file)
     
-    csv_data = convert_coco_masks_to_button_coordinates_csv(mask)
+    csv_data = convert_coco_masks_to_button_coordinates_csv(masks)
 
 
     return csv_data
@@ -36,6 +36,6 @@ def image_bytes_to_opencvimg(img_file):
     
     return img
 
-def convert_coco_masks_to_button_coordinates_csv(mask):
-    csv_data = mask # TODO: actually convert coco masks to our csv format
+def convert_coco_masks_to_button_coordinates_csv(masks):
+    csv_data = masks # TODO: actually convert coco masks to our csv format
     return csv_data
