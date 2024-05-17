@@ -39,11 +39,12 @@ const int MOVE_OUT_Y = 0;
 
 //servo parameters
 const int SERVO_PIN = 18;
-const int UP_ANGLE = 90;
-const int PRESS_ANGLE = 190;
+const int UP_TIME = 2000;
+const int PRESS_TIME = 1800;
 const int SERVO_SHORT_DELAY = 300; //in ms
 const int SERVO_LONG_DELAY = 1500; //in ms
-const int SERVO_DELAY = 300; //in ms (delay for the servo to go up)
+const int SERVO_DELAY = 300; //in ms (delay for the servo to move)
+const int SERVO_BALANCE = 20000;
 //Servo servo;
 
 //pin for the plotter limit
@@ -58,8 +59,17 @@ int position[2] = {0, 0};
 Setup the servo
 */
 void servoSetup() {
-//  servo.attach(SERVO_PIN);
-//  servo.write(UP_ANGLE);
+  pinMode(SERVO_PIN, OUTPUT);
+  moveServo(UP_TIME);
+}
+
+void moveServo(int time){
+  delay(SERVO_DELAY);
+  digitalWrite(SERVO_PIN, HIGH);
+  delayMicroseconds(time);
+  digitalWrite(SERVO_PIN, LOW);
+  delayMicroseconds(SERVO_BALANCE - time);
+  delay(SERVO_DELAY);
 }
 
 /*
@@ -167,7 +177,7 @@ void calibrate(){
 }
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   Serial.println();
   delay(1000); //delay so that the first string is printed
   Serial.println("HELLO");
@@ -262,6 +272,9 @@ void handleShortPress() {
   delay(SERVO_SHORT_DELAY);
   servo.write(UP_ANGLE);
   delay(SERVO_DELAY);*/
+  moveServo(PRESS_TIME);
+  delay(SERVO_SHORT_DELAY);
+  moveServo(UP_TIME);
   server.send(200, F("text/plain"), "OK");
 }
 
@@ -271,6 +284,9 @@ void handleLongPress() {
   delay(SERVO_LONG_DELAY);
   servo.write(UP_ANGLE);
   delay(SERVO_DELAY);*/
+  moveServo(PRESS_TIME);
+  delay(SERVO_LONG_DELAY);
+  moveServo(UP_TIME);
   server.send(200, F("text/plain"), "OK");
 }
 
