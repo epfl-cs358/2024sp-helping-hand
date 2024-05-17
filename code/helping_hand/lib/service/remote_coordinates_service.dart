@@ -3,8 +3,8 @@ import "package:hooks_riverpod/hooks_riverpod.dart";
 
 class RemoteCoordinatesService {
   // FIXME Parameters to tweak
-  static const remoteAreaOrigin = Point2D(x: 0, y: 100);
-  static const remoteAreaLimit = Point2D(x: 850, y: 500);
+  static const remoteAreaOrigin = Point2D(x: 100, y: 0);
+  static const remoteAreaLimit = Point2D(x: 500, y: 850);
 
   static final remoteAreaCenter =
       remoteAreaOrigin.add(delta: remoteAreaLimit).scale(0.5);

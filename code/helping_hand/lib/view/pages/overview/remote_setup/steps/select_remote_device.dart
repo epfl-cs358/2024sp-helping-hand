@@ -55,7 +55,6 @@ class SelectRemoteDevice extends HookConsumerWidget {
                 confirmState.value = SimpleRequestState.valid;
                 step.value++;
               } catch (e) {
-                print(e);
                 error.value = "Remote device not reachable.";
                 confirmState.value = SimpleRequestState.still;
               }
