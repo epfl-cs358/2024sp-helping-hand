@@ -1,13 +1,11 @@
 import "package:helping_hand/model/config/point_2d.dart";
+import "package:helping_hand/static/parameters.dart";
 import "package:hooks_riverpod/hooks_riverpod.dart";
 
 class RemoteCoordinatesService {
-  // FIXME Parameters to tweak
-  static const remoteAreaOrigin = Point2D(x: 100, y: 0);
-  static const remoteAreaLimit = Point2D(x: 500, y: 850);
-
-  static final remoteAreaCenter =
-      remoteAreaOrigin.add(delta: remoteAreaLimit).scale(0.5);
+  static final remoteAreaCenter = Parameters.remoteAreaOrigin
+      .add(delta: Parameters.remoteAreaLimit)
+      .scale(0.5);
 
   static final povider = Provider(
     (ref) => RemoteCoordinatesService(),
@@ -16,9 +14,7 @@ class RemoteCoordinatesService {
   RemoteCoordinatesService();
 
   Point2D constrainRemoteArea(Point2D base) => base.constrain(
-        min: remoteAreaOrigin,
-        max: remoteAreaLimit,
+        min: Parameters.remoteAreaOrigin,
+        max: Parameters.remoteAreaLimit,
       );
-
-  // TODO coordinates conversion (config -> remote) system
 }
