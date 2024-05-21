@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import matplotlib.pyplot as plt
+from parameters import *
 
 ## Edge detection
 def process_image(image_bytes):
@@ -10,16 +11,19 @@ def process_image(image_bytes):
     # Decode the numpy array into an image
     img = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
 
+    # rotate the image
+    img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
+
     if img is None:
         raise ValueError("Could not decode image")
 
-    y_min = 250
-    y_max = 970
+    y_min = 0
+    y_max = MEASURED_CORNERS[2][0]
 
     # Crop the image based on y-axis thresholds
-    cropped_image = img[y_min:y_max, :]
-    # plt.imshow(cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB))
-    # plt.show()
+    cropped_image = img[:, y_min:y_max]
+    plt.imshow(cv2.cvtColor(cropped_image, cv2.COLOR_BGR2RGB))
+    plt.show()
 
     gray = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2GRAY)
 
@@ -77,8 +81,8 @@ def process_image(image_bytes):
         M = cv2.moments(contour)
         if M["m00"] != 0:
 
-            cX = int(M["m10"] / M["m00"])
-            cY = int(M["m01"] / M["m00"]) + y_min
+            cX = int(M["m10"] / M["m00"]) + y_min
+            cY = int(M["m01"] / M["m00"])
             area = cv2.contourArea(contour)
             buttons.append(["Button", cX, cY])  # Check if it is appropriate to label each coutour a button?
             # This is to draw the contours and the center points (I do it on the cropped image for now)

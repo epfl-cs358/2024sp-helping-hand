@@ -12,10 +12,10 @@ REMOTE_AREA_LIMIT = (500, 850)  # bottom right
 # carmera corners measured in pixels in the camera's coordinates system
 # from the fake remote markers
 MEASURED_CORNERS = (
-    (477, 410),  # top left
-    (1020, 606),  # top right
-    (714, 1354),  # bottom right
-    (230, 1175),  # bottom left
+    (316, 248),  # top left
+    (750, 246),  # top right
+    (755, 1356),  # bottom right
+    (323, 1351),  # bottom left
 )
 
 # remote plotter corners measured in steps in the plotter's coordinates system
@@ -26,3 +26,5 @@ ACTUAL_CORNERS = (
     (490, 840),  # bottom right
     (110, 840),  # bottom left
 )
+
+# === Edge detection parameters ===
