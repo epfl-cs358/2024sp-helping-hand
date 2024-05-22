@@ -13,7 +13,7 @@ class RemoteControllerService {
   static const moveEndpoint = "go-to";
 
   static const successCode = NetworkDeviceService.successCode;
-  static const timeoutDuration = Duration(seconds: 3);
+  static const timeoutDuration = Duration(seconds: 5);
 
   static final povider = Provider.family<RemoteControllerService, RemoteDevice>(
     (ref, device) => RemoteControllerService._(

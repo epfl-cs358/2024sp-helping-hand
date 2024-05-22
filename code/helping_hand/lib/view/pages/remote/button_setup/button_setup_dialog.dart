@@ -24,8 +24,8 @@ class ButtonSetupDialog extends HookConsumerWidget {
 
   static const directions = [
     Point2D(x: -1, y: 0),
-    Point2D(x: 0, y: -1),
     Point2D(x: 0, y: 1),
+    Point2D(x: 0, y: -1),
     Point2D(x: 1, y: 0),
   ];
   static final _deltas = Parameters.buttonsIncrements
