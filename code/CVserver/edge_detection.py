@@ -19,9 +19,8 @@ def process_image(image_bytes):
     if img is None:
         raise ValueError("Could not decode image")
 
-    y_min = 200
-    y_max = 1000
-        #MEASURED_CORNERS)[2][0]
+    y_min = ACTUAL_CORNERS[0][0]
+    y_max = ACTUAL_CORNERS[2][1]
     # Crop the image based on y-axis thresholds
     cropped_image = img[:, y_min:y_max]
 
