@@ -1,9 +1,13 @@
 import cv2
-import numpy as np
+
+# relative import the coordinates module
+import sys
+sys.path.append("..")
+
 from parameters import *
 
 
-def change_pixel_color(image_path, points, size=5):
+def change_pixel_color(image_path, points, size=2):
     image = cv2.imread(image_path)
     if image is None:
         print("Image not found or unable to read")
@@ -19,12 +23,12 @@ def change_pixel_color(image_path, points, size=5):
                 if 0 <= nx < image.shape[1] and 0 <= ny < image.shape[0]:
                     image[ny, nx] = red_color
 
-    cv2.imwrite('modified_img.png', image)
+    cv2.imwrite("calibration_result.png", image)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
 
-image_path = 'fake_remote.jpg'
+image_path = "calibration_capture.jpg"
 
 points = MEASURED_CORNERS
 
