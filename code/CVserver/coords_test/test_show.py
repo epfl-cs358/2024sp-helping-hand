@@ -3,12 +3,13 @@ import matplotlib.image as mpimg
 
 # relative import the coordinates module
 import sys
+from parameters import *
 sys.path.append("..")
 
 from coordinates import *
 
 
-MARKERS_FILE = "markers.jpg"
+MARKERS_FILE = "fake_remote.jpg"
 
 # test points measured in pixels in the camera's coordinates
 TEST_POINTS = (
