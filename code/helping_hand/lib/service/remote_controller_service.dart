@@ -44,7 +44,7 @@ class RemoteControllerService {
             endpoint,
           ),
         ),
-      );
+      ).timeout(timeoutDuration);
 
   Future<void> shortPress() => _callEndpoint(shortPressEndoint);
   Future<void> longPress() => _callEndpoint(longPressEndoint);
