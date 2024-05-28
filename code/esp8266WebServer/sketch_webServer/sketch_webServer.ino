@@ -32,6 +32,7 @@ AccelStepper X(MotorInterfaceType, 0, 4); //0: step, 4: direction
 AccelStepper Y(MotorInterfaceType, 20, 21); //20: step, 21: direction
 MultiStepper XY;
 #define MOTOR_MAX_SPEED 460.0
+#define CALIBRATION_MAX_SPEED 25.0
 const int MAX_X = 400;
 const int MAX_Y = 1000;
 const int MOVE_OUT_X = 0;
@@ -76,6 +77,7 @@ void moveServo(int time){
 Setup the motors
 */
 void motorsSetup(float max_speed) {
+  XY = MultiStepper();
   X.setMaxSpeed(max_speed);
   Y.setMaxSpeed(max_speed);
   XY.addStepper(X);
@@ -182,9 +184,10 @@ void setup() {
   delay(1000); //delay so that the first string is printed
   Serial.println("HELLO");
   pinMode(LED_BLUE, OUTPUT);
-  motorsSetup(MOTOR_MAX_SPEED);
   servoSetup();
+  motorsSetup(CALIBRATION_MAX_SPEED);
   calibrate();
+  motorsSetup(MOTOR_MAX_SPEED);
   //testMotorsSpeed();
   wifiSetup();
   webServerSetup();
