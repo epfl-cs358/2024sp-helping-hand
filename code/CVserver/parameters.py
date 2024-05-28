@@ -4,7 +4,7 @@
 
 # filtering points outside of remote area
 # measured in steps in the plotter's coordinates system
-REMOTE_AREA_ORIGIN = (20, 200)  # top left
+REMOTE_AREA_ORIGIN = (20, 170)  # top left
 REMOTE_AREA_LIMIT = (360, 1020)  # bottom right
 
 # perspective correction
