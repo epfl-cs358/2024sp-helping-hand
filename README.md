@@ -46,13 +46,13 @@ This project is mainly composed of electronic components, laser cut _4mm_ MDF pl
 Here are the steps to follow to build the main body (and the camera module) of the system:
 
 1. Laser cut the following MDF (4mm) parts
-    - TODO link to MDF parts
-    - TODO
-    - TODO
+    - [Plotter](design/plotter/plotter.dxf)
+    - [Camholder](design/camholder.dxf)
 2. 3D print the required parts (PETG)
-    - TODO link to STL parts
-    - TODO
-    - TODO
+    - [Gear holders for the column: top](design/plotter/plotter_column_2_belt_holder_top.stl)
+    - [Gear holders for the column: bottom](design/plotter/plotter_column_2_belt_holder_bottom.stl) 
+    - [All clamp parts](design/clamp/)
+    - [All y axis parts](design/y_axis/)
 3. For the assembly you will also need the following parts
     - One _8mm_ diameter stainless steel bar, _290mm_ of length
     - One _8mm_ diameter stainless steel bar, _305mm_ of length
