@@ -27,7 +27,7 @@ Below is a brief explanation of this repository's structure to provide context a
     - `esp32-cam`: the ESP-32 Cam [Arduino](https://www.arduino.cc/) code to be able to capture an image using an HTTP request.
     - `esp32-controller`: the ESP-32 C6 code that is responsible to control the motors and press the remote's buttons on the main plate.
     - `helping_hand`: the [Flutter](https://flutter.dev/) code used to create the application from which we control the device and interact with the different microcontrollers in the system.
-- `desgin` directory: contains all the 3D modeling files and exports along with the laser cut sheets.
+- `design` directory: contains all the 3D modeling files and exports along with the laser cut sheets.
 - `diagrams` directory: contains all the protocol diagrams specifying how the different parts of the system interact with one another.
 - `documentation` directory: contains all the pictures and schematics to be able to reproduce this project.
 - `proposal` directory: the [LaTeX](https://www.latex-project.org/) document used to write the original project proposal.
@@ -50,6 +50,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - TODO
     - TODO
 2. 3D print the required parts (PETG)
+    - [West Axis STL](design/)
     - TODO link to STL parts
     - TODO
     - TODO
@@ -86,14 +87,14 @@ Here are all the required electronic components:
 
 Wire everything together as indicated in the following schematic:
 
-<img src="documentation/electric-schema/electric_schema.png" width=400>
+<img src="documentation/assembly/electric.png" width=400>
 
 **Note**: make sure to leave some length on the cable used on the travelling parts.
 
 For reference, here are some pictures of the resulting cable management (done under the board):
 
-<img src="documentation/electric-schema/board_wiring.png" width=400><br>
-<img src="documentation/electric-schema/side_wiring.png" width=400>
+<img src="documentation/wiring/board.png" width=400><br>
+<img src="documentation/wiring/side.png" width=400>
 
 ### Software
 
