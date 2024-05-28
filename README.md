@@ -63,7 +63,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - Eight _M2_ screws with nuts, _20mm_ of length
     - One _M5_ screw with nut, _30mm_ of length
     - Two _M5_ screws with nuts, _20mm_ of length
-    - 8 neodymium magnets, cubes of _5mm_
+    - Eight neodymium magnets, cubes of _5mm_ sides
     - Two rubber sheets, _30mm_ by _12mm_
     - Two plastic belts, _610mm_ and _320mm_
     - End gears and axes for the connection between belt and motors
@@ -71,7 +71,13 @@ Here are the steps to follow to build the main body (and the camera module) of t
 
 For reference, here are some pictures of the full result assembly:
 
-TODO
+<img src="documentation/images/assembly/controller_top.png" width=400>
+<img src="documentation/images/assembly/controller_front.png" width=400>
+<img src="documentation/images/assembly/controller_east_side.png" width=400>
+<img src="documentation/images/assembly/controller_west_side.png" width=400>
+<img src="documentation/images/assembly/clamp_bottom.png" width=400>
+<img src="documentation/images/assembly/camera_module.png" width=400>
+<img src="documentation/images/assembly/camera_top.png" width=400>
 
 #### Electronics
 
@@ -87,14 +93,14 @@ Here are all the required electronic components:
 
 Wire everything together as indicated in the following schematic:
 
-<img src="documentation/assembly/electric.png" width=400>
+<img src="documentation/electric-shema/electric-schema.png" width=400>
 
 **Note**: make sure to leave some length on the cable used on the travelling parts.
 
 For reference, here are some pictures of the resulting cable management (done under the board):
 
-<img src="documentation/wiring/board.png" width=400><br>
-<img src="documentation/wiring/side.png" width=400>
+<img src="documentation/images/wiring/board.png" width=400><br>
+<img src="documentation/images/wiring/side.png" width=400>
 
 ### Software
 
