@@ -1,0 +1,11 @@
+Flask==3.0.3
+segment_anything @ git+https://github.com/facebookresearch/segment-anything.git@6fdee8f2727f4506cfbbe553e23b895e27956588
+numpy==1.26.4
+opencv-python==4.9.0.80
+pycocotools==2.0.7
+matplotlib==3.8.4
+onnx==1.16.0
+onnxruntime==1.17.3
+torch==2.3.0+cpu
+torchvision==0.18.0+cpu
+--extra-index-url https://download.pytorch.org/whl/cpu
