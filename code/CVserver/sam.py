@@ -4,11 +4,14 @@ import cv2
 import matplotlib.pyplot as plt
 import pickle
 
-POINT_DEFINITELY_ON_REMOTE = (824, 838)
-REMOTE_DIM_MIN = (500, 150)
-REMOTE_DIM_MAX = (1600, 700)
+POINT_DEFINITELY_ON_REMOTE = (362, 824)
+REMOTE_DIM_MIN = (150, 500)
+REMOTE_DIM_MAX = (700, 1600)
 
-BUTTON_TO_REMOTE_MAX = (1/3, 4/5)
+BUTTON_TO_REMOTE_MAX = (4/5, 1/3)
+CLOSE_BUTTON_THRESH = 5
+
+SAMPLING_X_CUTOFFS = (5/24, 19/24)
 
 DEBUG_OUT = True
 DEBUG_IN = False
@@ -24,7 +27,13 @@ def main():
     #remotes = restore_masks('_remotes')
     #for mask in filtered_masks:
     #    generate_image_overlay([mask], image, str(mask['bbox']))
-        
+
+    #buttons = masks_to_button_coordinates(filtered_masks)   
+    #buttons = filter_close_buttons(buttons)
+    #for button in buttons:
+    #    print(button[1], button[2])
+    #    cv2.circle(image, (button[1], button[2]), 5, (0, 0, 255), -1)
+    #cv2.imwrite('last_analyze/capture_buttons.jpg', image)
 
 
 def process_image(image_file):
@@ -43,16 +52,26 @@ def process_image(image_file):
         save_masks(filtered_masks, '_filtered')
         generate_image_overlay(filtered_masks, image, '_filtered')
 
-    buttons = masks_to_button_coordinates(masks)
+    buttons = masks_to_button_coordinates(filtered_masks)
+    buttons = filter_close_buttons(buttons)
+
+    if DEBUG_OUT:
+        for button in buttons:
+            print(button[1], button[2])
+            cv2.circle(image, (button[1], button[2]), 5, (0, 0, 255), -1)
+        cv2.imwrite('last_analyze/capture_buttons.jpg', image)
 
     return buttons
 
 def analyse_and_extract_masks(image):
     # load SAM model
     sam = sam_model_registry["vit_b"](checkpoint="vit_b_model.pth")
+    point_grid = build_point_grid(48)
     mask_generator = SamAutomaticMaskGenerator(
         model=sam,
-        #points_per_side=64,
+        #points_per_side=48,
+        points_per_side=None,
+        point_grids=[point_grid],
         stability_score_thresh=0.8
     )
 
@@ -62,12 +81,22 @@ def analyse_and_extract_masks(image):
 
     return masks
 
+def build_point_grid(n_per_side: int) -> np.ndarray:
+    offset = 1 / (2 * n_per_side)
+    points_one_side = np.linspace(offset, 1 - offset, n_per_side)
+    points_x = np.tile(points_one_side[None, :], (n_per_side, 1))
+    points_y = np.tile(points_one_side[:, None], (1, n_per_side))
+    points = np.stack([points_x, points_y], axis=-1)
+    ret = np.array([row[int(n_per_side*SAMPLING_X_CUTOFFS[0]):int(n_per_side*SAMPLING_X_CUTOFFS[1])+1] for row in points]).reshape(-1, 2)
+    return ret
+
 def image_bytes_to_opencvimg(img_file):
     # convert string data to numpy array
     npimg = np.fromstring(img_file, np.uint8)
 
     # convert numpy array to image
     img = cv2.imdecode(npimg, cv2.COLOR_BGR2RGB)
+    img = cv2.rotate(img, cv2.ROTATE_90_CLOCKWISE)
     print("image transformed to cv2 numpy")
     
     return img
@@ -78,9 +107,23 @@ def masks_to_button_coordinates(masks):
         bbox = mask['bbox']
         x = bbox[0] + bbox[2]/2
         y = bbox[1] + bbox[3]/2
-        buttons.append(("button", x, y))
+        buttons.append(("button", int(x), int(y)))
 
     return buttons
+
+def filter_close_buttons(buttons):
+    filtered_buttons = []
+    eps = CLOSE_BUTTON_THRESH
+    # filter almost coinciding buttons
+    for button in buttons:
+        button_close_found = False
+        for filtered_button in filtered_buttons:
+            if abs(button[1] - filtered_button[1]) < eps and abs(button[2] - filtered_button[2]) < eps:
+                button_close_found = True
+                continue
+        if not button_close_found:
+            filtered_buttons.append(button)
+    return filtered_buttons
 
 def filter_masks_on_remote(masks):
     # sort masks by size so insertion in MaskTree starts with the biggest
