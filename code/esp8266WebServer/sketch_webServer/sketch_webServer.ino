@@ -29,11 +29,11 @@ Preferences preferences;
 
 //motors parameters: DO NOT USE 25 & 26 pins
 AccelStepper X(MotorInterfaceType, 0, 4); //0: step, 4: direction
-AccelStepper Y(MotorInterfaceType, 20, 21); //32: step, 33: direction
+AccelStepper Y(MotorInterfaceType, 20, 21); //20: step, 21: direction
 MultiStepper XY;
-#define MOTOR_MAX_SPEED 300.0
-const int MAX_X = 380;
-const int MAX_Y = 850;
+#define MOTOR_MAX_SPEED 460.0
+const int MAX_X = 400;
+const int MAX_Y = 1000;
 const int MOVE_OUT_X = 0;
 const int MOVE_OUT_Y = 0;
 
@@ -75,9 +75,9 @@ void moveServo(int time){
 /*
 Setup the motors
 */
-void motorsSetup() {
-  X.setMaxSpeed(MOTOR_MAX_SPEED);
-  Y.setMaxSpeed(MOTOR_MAX_SPEED);
+void motorsSetup(float max_speed) {
+  X.setMaxSpeed(max_speed);
+  Y.setMaxSpeed(max_speed);
   XY.addStepper(X);
   XY.addStepper(Y);
 }
@@ -182,11 +182,22 @@ void setup() {
   delay(1000); //delay so that the first string is printed
   Serial.println("HELLO");
   pinMode(LED_BLUE, OUTPUT);
-  motorsSetup();
+  motorsSetup(MOTOR_MAX_SPEED);
   servoSetup();
   calibrate();
+  //testMotorsSpeed();
   wifiSetup();
   webServerSetup();
+}
+
+void testMotorsSpeed(){
+  for(int i = 0; i < 10; i++){
+    goTo(0, 1000);
+    calibrate();
+    XY = MultiStepper();
+    motorsSetup(i * 10 + 400);
+  }
+  
 }
 
 /*
@@ -268,10 +279,6 @@ void handleMoveOut() {
 
 //execute short press
 void handleShortPress() {
-/*  servo.write(PRESS_ANGLE);
-  delay(SERVO_SHORT_DELAY);
-  servo.write(UP_ANGLE);
-  delay(SERVO_DELAY);*/
   moveServo(PRESS_TIME);
   delay(SERVO_SHORT_DELAY);
   moveServo(UP_TIME);
@@ -280,10 +287,6 @@ void handleShortPress() {
 
 //execute long press
 void handleLongPress() {
-/*  servo.write(PRESS_ANGLE);
-  delay(SERVO_LONG_DELAY);
-  servo.write(UP_ANGLE);
-  delay(SERVO_DELAY);*/
   moveServo(PRESS_TIME);
   delay(SERVO_LONG_DELAY);
   moveServo(UP_TIME);
