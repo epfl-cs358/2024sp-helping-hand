@@ -47,9 +47,8 @@ Here are the steps to follow to build the main body (and the camera module) of t
 
 1. Laser cut the following MDF (4mm) parts
     - [Plotter](design/plotter/plotter.dxf)
-    - [Camholder](design/camholder.dxf)
+    - [Cam holder](design/camholder.dxf)
 2. 3D print the required parts (PETG)
-    - [West Axis STL](design/)
     - [Gear holders for the column: top](design/plotter/plotter_column_2_belt_holder_top.stl)
     - [Gear holders for the column: bottom](design/plotter/plotter_column_2_belt_holder_bottom.stl) 
     - [All clamp parts](design/clamp/)
@@ -58,6 +57,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - One _8mm_ diameter stainless steel bar, _290mm_ of length
     - One _8mm_ diameter stainless steel bar, _305mm_ of length
     - Two _8mm_ diameter stainless steel bar, _160mm_ of length
+    - Four _8mm_ rod bearings to slide on the bars
     - Two _5mm_ diameter stainless steel bars, _150mm_ of length
     - Eight _M4_ screws with nuts, _35mm_ of length
     - Eight _M2_ screws with nuts, _20mm_ of length
@@ -71,13 +71,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
 
 For reference, here are some pictures of the full result assembly:
 
-<img src="documentation/images/assembly/controller_top.png" width=400>
-<img src="documentation/images/assembly/controller_front.png" width=400>
-<img src="documentation/images/assembly/controller_east_side.png" width=400>
-<img src="documentation/images/assembly/controller_west_side.png" width=400>
-<img src="documentation/images/assembly/clamp_bottom.png" width=400>
-<img src="documentation/images/assembly/camera_module.png" width=400>
-<img src="documentation/images/assembly/camera_top.png" width=400>
+<img src="documentation/images/assembly/controller_top.png" height=400> <img src="documentation/images/assembly/controller_front.png" height=400> <img src="documentation/images/assembly/controller_east_side.png" height=400> <img src="documentation/images/assembly/controller_west_side.png" height=400> <img src="documentation/images/assembly/clamp_bottom.png" height=400> <img src="documentation/images/assembly/camera_module.png" height=400> <img src="documentation/images/assembly/camera_top.png" height=400>
 
 #### Electronics
 
@@ -93,7 +87,7 @@ Here are all the required electronic components:
 
 Wire everything together as indicated in the following schematic:
 
-<img src="documentation/electric-shema/electric-schema.png" width=400>
+<img src="documentation/electric-schema/electric-schema.png" width=400>
 
 **Note**: make sure to leave some length on the cable used on the travelling parts.
 
