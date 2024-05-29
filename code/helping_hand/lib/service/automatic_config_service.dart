@@ -12,11 +12,12 @@ class AutomaticConfigService {
 
   static const cvServerConfigEndopint = "analyse";
   static final cvServerUri = Uri.http(
-    "192.168.1.117:5005",
+    "192.168.159.143:5005",
     cvServerConfigEndopint,
   );
 
   static const timeoutDuration = Duration(seconds: 5);
+  static const timeoutCvServer = Duration(minutes: 5);
 
   static final povider = Provider<AutomaticConfigService>(
     (ref) => AutomaticConfigService._(
@@ -46,7 +47,7 @@ class AutomaticConfigService {
 
   Future<String> _analyzePicture(String picture) async {
     final response =
-        await client.post(cvServerUri, body: picture).timeout(timeoutDuration);
+        await client.post(cvServerUri, body: picture).timeout(timeoutCvServer);
 
     if (response.statusCode != NetworkDeviceService.successCode) {
       throw Exception("Cannot reach cv server.");
