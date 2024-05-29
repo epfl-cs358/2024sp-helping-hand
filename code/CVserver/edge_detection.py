@@ -217,7 +217,7 @@ def process_image(image_bytes):
 
                     # area = cv2.contourArea(max_contour)
 
-                    buttons.append(["Button", cX, cY])  # Check if it is appropriate to label each coutour a button?
+                    buttons.append(("Button", cX, cY))  # Check if it is appropriate to label each coutour a button?
 
                     # This is to draw the contours and the center points
 
