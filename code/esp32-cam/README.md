@@ -15,6 +15,16 @@ https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32
 3. In `Tools>Board>esp32` select `AI Thinker ESP32-CAM`
 4. For the Serial connection, set the baud to `115200` (dropdown at the top right of the serial console).
 
+#### Setting the WIFI credentials
+The WIFI credentials (SSID and Password) are set in the main Arduino project file: `esp32-cam.ino`. At the top of the file (line ~35) the credentials have to be set in the following lines:
+```
+// ===========================
+// Enter your WiFi credentials
+// ===========================
+const char* ssid = "wifi-ssid";
+const char* password = "wifi-password";
+```
+
 #### Flashing
 `GND` and `IO0` need to be connected while powering on the ESP for it to boot in flashable mode. Use a cable to connect them. To boot the flashed program, remove the cable and reboot (i.e. power cycle) the ESP with the two pins not connected.
 
