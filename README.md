@@ -89,7 +89,7 @@ Wire everything together as indicated in the following schematic:
 
 <img src="documentation/electric-schema/electric_schema.png" width="500">
 
-**Note**: make sure to leave some length on the cable used on the travelling parts.
+**Note**: make sure to leave some length on the cables used on the travelling parts.
 
 For reference, here are some pictures of the resulting cable management (done under the board):
 
@@ -107,7 +107,7 @@ The following diagram summarizes the different intractions between the component
 
 All the system is driven by a [Flutter](https://flutter.dev/) cross-platform application.
 
-You can install the Flutter dev environment by following the installation instructions (on any OS): https://docs.flutter.dev/get-started/install
+You can install the Flutter dev environment by following the installation instructions (on any OS): https://docs.flutter.dev/get-started/install.
 
 Then navigate to the directory of the application, `code/helping_hand`.
 You can now launch the application on your platform of choice, on web for example `flutter run -d chrome`.
@@ -122,14 +122,14 @@ Here are a few pictures of the application interface:
 
 We use the [Arduino IDE](https://www.arduino.cc/en/software) to flash the two ESP-32 boards:
 
-- **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to `code/esp32-cam/README.md`.
+- **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to the [ESP-32 CAM README](code/esp32-cam/README.md)].
 - **ESP-32 Plotter** (the remote controller): flash the `code/esp32-controller/sketch_webServer.ino`.
 
 #### Computer Vision Server
 
 We used a [Python](https://www.python.org/) web server (running on any computer or in the cloud) powered by the [Flask](https://flask.palletsprojects.com/en/3.0.x/) framework.
 
-Refer to the associated README to setup the python server: `code/CVserver/README.md`.
+Refer to the associated README to setup the python server: [Python CVserver Setup README](code/CVserver/README.md).
 
 ## Contributors
 
