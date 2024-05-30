@@ -22,13 +22,17 @@
     ```
     curl https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth > vit_b_model.pth
     ```
-    There are other (larger) models available. However note the size and RAM usage requirements for these. 
+    There are other (larger) models available.
+    You could change which one is used by changing it in the code of `sam.py`.
+    However note the size and RAM usage requirements for these. 
     The smallest (b) model uses more than 10GB of RAM while analyzing images.
     The biggest one consistently brings my machine into OOM situations after consuming more than 20GB of RAM.  
     Note that if you want to use an other model, you have to specify the correct filename and model type in `sam.py` > `analyse_and_extract_masks()` > `sam_model_registry`
 
-
-
+5. launch the server
+    ```
+    python CVserver.py
+    ```
 
 
 Source for the segmentation framework used: https://github.com/facebookresearch/segment-anything
