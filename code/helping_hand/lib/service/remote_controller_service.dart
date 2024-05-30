@@ -13,7 +13,7 @@ class RemoteControllerService {
   static const moveEndpoint = "go-to";
 
   static const successCode = NetworkDeviceService.successCode;
-  static const timeoutDuration = Duration(seconds: 3);
+  static const timeoutDuration = Duration(seconds: 10);
 
   static final povider = Provider.family<RemoteControllerService, RemoteDevice>(
     (ref, device) => RemoteControllerService._(
@@ -44,7 +44,7 @@ class RemoteControllerService {
             endpoint,
           ),
         ),
-      );
+      ).timeout(timeoutDuration);
 
   Future<void> shortPress() => _callEndpoint(shortPressEndoint);
   Future<void> longPress() => _callEndpoint(longPressEndoint);

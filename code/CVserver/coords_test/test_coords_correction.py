@@ -5,10 +5,11 @@ import matplotlib.image as mpimg
 import sys
 sys.path.append("..")
 
+from parameters import *
 from coordinates import *
 
 
-MARKERS_FILE = "markers.jpg"
+MARKERS_FILE = "calibration_capture.jpg"
 
 # test points measured in pixels in the camera's coordinates
 TEST_POINTS = (
@@ -37,7 +38,7 @@ def show_markers(ax, image_file, corners):
     ax.imshow(img)
 
     # show measured_corners
-    _display_corners(ax, corners, "r", "b")
+    _display_corners(ax, corners, "r", "g")
 
 
 def show_plotter_area(ax, origin, limit, corners):
@@ -49,7 +50,9 @@ def show_plotter_area(ax, origin, limit, corners):
         (origin[0], limit[1]),
     )
 
+    # remote area limits
     _display_corners(ax, remote_area_corners, "k", "k")
+
     # markers delimitation in plotters coordinates
     _display_corners(ax, corners, "g", "g")
 

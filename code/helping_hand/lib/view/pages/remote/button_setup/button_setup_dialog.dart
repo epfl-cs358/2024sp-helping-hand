@@ -6,6 +6,7 @@ import "package:helping_hand/model/saved_remote.dart";
 import "package:helping_hand/service/remote_controller_service.dart";
 import "package:helping_hand/service/remote_coordinates_service.dart";
 import "package:helping_hand/state/saved_remotes.dart";
+import "package:helping_hand/static/parameters.dart";
 import "package:helping_hand/view/components/async/circular_value.dart";
 import "package:helping_hand/view/components/buttons/button_primary.dart";
 import "package:helping_hand/view/components/buttons/button_secondary.dart";
@@ -21,17 +22,14 @@ class ButtonSetupDialog extends HookConsumerWidget {
   static const title = "New Button";
   static const textFieldConstraints = BoxConstraints(maxWidth: 200);
 
-  // FIXME Parameters to tweak
-  static const _scales = [80.0, 20.0, 5.0];
-
   static const directions = [
     Point2D(x: -1, y: 0),
-    Point2D(x: 0, y: -1),
     Point2D(x: 0, y: 1),
+    Point2D(x: 0, y: -1),
     Point2D(x: 1, y: 0),
   ];
-  static final _deltas =
-      _scales.expand((s) => directions.map((d) => d.scale(s)));
+  static final _deltas = Parameters.buttonsIncrements
+      .expand((s) => directions.map((d) => d.scale(s)));
   static const _turns = [2, 1, 3, 0];
   static const _speeds = [
     Icons.fast_forward,
@@ -104,7 +102,7 @@ class ButtonSetupDialog extends HookConsumerWidget {
     );
 
     final posDisplayed = buttonPos.value.sub(
-      delta: RemoteCoordinatesService.remoteAreaOrigin,
+      delta: Parameters.remoteAreaOrigin,
     );
     final coords = Text(
       "X: ${posDisplayed.x}  Y: ${posDisplayed.y}",
