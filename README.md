@@ -4,7 +4,7 @@
 
 2024 - EPFL (CS-358) MIT - Group project
 
-<img src="documentation/images/main.png" width=400>
+<img src="documentation/images/main.png" width="550">
 
 ## Project's Overview
 
@@ -71,7 +71,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
 
 For reference, here are some pictures of the full result assembly:
 
-<img src="documentation/images/assembly/controller_top.png" height=400> <img src="documentation/images/assembly/controller_front.png" height=400> <img src="documentation/images/assembly/controller_east_side.png" height=400> <img src="documentation/images/assembly/controller_west_side.png" height=400> <img src="documentation/images/assembly/clamp_bottom.png" height=400> <img src="documentation/images/assembly/camera_module.png" height=400> <img src="documentation/images/assembly/camera_top.png" height=400>
+<img src="documentation/images/assembly/controller_top.png" height="400"> <img src="documentation/images/assembly/controller_front.png" height="400"> <img src="documentation/images/assembly/controller_east_side.png" height="400"> <img src="documentation/images/assembly/controller_west_side.png" height="400"> <img src="documentation/images/assembly/clamp_bottom.png" height="400"> <img src="documentation/images/assembly/camera_module.png" height="400"> <img src="documentation/images/assembly/camera_top.png" height="400">
 
 #### Electronics
 
@@ -87,14 +87,14 @@ Here are all the required electronic components:
 
 Wire everything together as indicated in the following schematic:
 
-<img src="documentation/electric-schema/electric-schema.png" width=400>
+<img src="documentation/electric-schema/electric_schema.png" width="500">
 
 **Note**: make sure to leave some length on the cable used on the travelling parts.
 
 For reference, here are some pictures of the resulting cable management (done under the board):
 
-<img src="documentation/images/wiring/board.png" width=400><br>
-<img src="documentation/images/wiring/side.png" width=400>
+<img src="documentation/images/wiring/board.png" width="400"><br>
+<img src="documentation/images/wiring/side.png" width="400">
 
 ### Software
 
