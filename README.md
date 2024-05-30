@@ -33,7 +33,7 @@ Below is a brief explanation of this repository's structure to provide context a
 - `proposal` directory: the [LaTeX](https://www.latex-project.org/) document used to write the original project proposal.
 - `reports` directory: our first meetings reports to agree on what to do together.
 
-## Built It Yourself !
+## Build It Yourself !
 
 This section is all about providing instructions and material to be able for anyone to reproduce this project by themselves.
 
@@ -67,7 +67,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - Two rubber sheets, _30mm_ by _12mm_
     - Two plastic belts, _610mm_ and _320mm_
     - End gears and axes for the connection between belt and motors
-4. Assemble everything and glue the MDF parts as indicated in the 3D step file: TODO link 3D step file
+4. Assemble everything and glue the MDF parts as indicated in the 3D step file: [Full assembly .step file](design/assembly.step).
 
 For reference, here are some pictures of the full result assembly:
 
@@ -77,13 +77,15 @@ For reference, here are some pictures of the full result assembly:
 
 Here are all the required electronic components:
 
-- ESP-32 CAM: TODO provide link
-- ESP-32 C6: TODO provide link
-- Motors A4988
-- servo
-- limit switches
-- condensators
-- stepper controllers
+- ESP-32 CAM
+- ESP-32 C6
+- Stepper mottors Nema14-01 (2 times)
+- Motors drivers A4988 (2 times)
+- Servo motor MG90S
+- DC to DC converters (2 times)
+- Two limit switches
+- Condensator _100uF_ (2 times)
+- Power Supply 9V
 
 Wire everything together as indicated in the following schematic:
 
@@ -111,6 +113,7 @@ You can install the Flutter dev environment by following the installation instru
 
 Then navigate to the directory of the application, `code/helping_hand`.
 You can now launch the application on your platform of choice, on web for example `flutter run -d chrome`.
+To build for other targets, you can follow the standard Flutter building procedures: https://docs.flutter.dev/deployment.
 
 Here are a few pictures of the application interface:
 
@@ -122,7 +125,7 @@ Here are a few pictures of the application interface:
 
 We use the [Arduino IDE](https://www.arduino.cc/en/software) to flash the two ESP-32 boards:
 
-- **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to the [ESP-32 CAM README](code/esp32-cam/README.md)].
+- **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to the [ESP-32 CAM README](code/esp32-cam/README.md).
 - **ESP-32 Plotter** (the remote controller): flash the `code/esp32-controller/sketch_webServer.ino`.
 
 #### Computer Vision Server
