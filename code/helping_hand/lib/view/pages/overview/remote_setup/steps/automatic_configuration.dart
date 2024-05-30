@@ -70,7 +70,7 @@ class AutomaticConfiguration extends HookConsumerWidget {
 
           confirmState.value = SimpleRequestState.valid;
           step.value++;
-        } catch (_) {
+        } catch (e) {
           error.value = "Camera device not reachable.";
           confirmState.value = SimpleRequestState.still;
         }
