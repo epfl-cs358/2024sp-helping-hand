@@ -29,7 +29,19 @@
     The biggest one consistently brings my machine into OOM situations after consuming more than 20GB of RAM.  
     Note that if you want to use an other model, you have to specify the correct filename and model type in `sam.py` > `analyse_and_extract_masks()` > `sam_model_registry`
 
-5. launch the server
+5. Calibration
+    The mapping of the image coordinates to the plotter steps needs to be done initially once the plotter is set up with the camera.
+    For this, take a picture of a flat reference object containing four points in the corners.
+    Measure the pixel coordinates for each of the four reference points and enter them into the `parameters.py` file as explained in the comments. 
+    Double check using the testing program after having replaced the `calibration_capture.jpg` with your picture:
+    ```
+    python test_calibration.py
+    ```
+    It generates a `calibration_result.jpg` with small red markers according to the set constans in `parameter.py`
+
+    Use the same object together with the app to get the plotter step position for the same points and also adapt `parameter.py` accordingly.
+
+6. launch the server
     ```
     python CVserver.py
     ```
