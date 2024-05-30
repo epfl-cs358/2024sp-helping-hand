@@ -41,6 +41,15 @@ bool isStreaming = false;
 
 #endif
 
+void add_http_allow_headers(httpd_req_t * req) {
+  httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
+  httpd_resp_set_hdr(req, "Access-Control-Allow-Credentials", "true");
+  httpd_resp_set_hdr(req, "Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  httpd_resp_set_hdr(req, "Access-Control-Max-Age", "1000");
+  httpd_resp_set_hdr(req, "Access-Control-Allow-Headers", "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale");
+}
+
+
 typedef struct
 {
     httpd_req_t *req;
@@ -180,6 +189,7 @@ static size_t jpg_encode_stream(void *arg, size_t index, const void *data, size_
 
 static esp_err_t discovery_handler(httpd_req_t *req)
 {
+    add_http_allow_headers(req);
     String message = String("CAM,");
     message += WiFi.macAddress();
     httpd_resp_send(req, message.c_str(), HTTPD_RESP_USE_STRLEN);
@@ -188,6 +198,7 @@ static esp_err_t discovery_handler(httpd_req_t *req)
 
 static esp_err_t capture_handler(httpd_req_t *req)
 {
+    add_http_allow_headers(req);
     camera_fb_t *fb = NULL;
     esp_err_t res = ESP_OK;
 #if ARDUHAL_LOG_LEVEL >= ARDUHAL_LOG_LEVEL_INFO
@@ -212,7 +223,6 @@ static esp_err_t capture_handler(httpd_req_t *req)
 
     httpd_resp_set_type(req, "image/jpeg");
     httpd_resp_set_hdr(req, "Content-Disposition", "inline; filename=capture.jpg");
-    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
 
     char ts[32];
     snprintf(ts, 32, "%ld.%06ld", fb->timestamp.tv_sec, fb->timestamp.tv_usec);
@@ -382,6 +392,7 @@ static esp_err_t parse_get(httpd_req_t *req, char **obuf)
 
 static esp_err_t led_flash_handler(httpd_req_t *req)
 {
+    add_http_allow_headers(req);
     char *buf = NULL;
     char intensity[32];
 
@@ -403,7 +414,6 @@ static esp_err_t led_flash_handler(httpd_req_t *req)
         enable_led(true);
 #endif
 
-    httpd_resp_set_hdr(req, "Access-Control-Allow-Origin", "*");
     return httpd_resp_send(req, NULL, 0);
 }
 
