@@ -12,7 +12,7 @@ class AutomaticConfigService {
 
   static const cvServerConfigEndopint = "analyse";
   static final cvServerUri = Uri.http(
-    "192.168.159.143:5005",
+    "192.168.225.143:5005",
     cvServerConfigEndopint,
   );
 
