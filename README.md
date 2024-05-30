@@ -4,7 +4,7 @@
 
 2024 - EPFL (CS-358) MIT - Group project
 
-<img src="documentation/images/main.png" width="550">
+<img src="documentation/images/main.png" width="600">
 
 ## Project's Overview
 
@@ -79,7 +79,7 @@ Here are all the required electronic components:
 
 - ESP-32 CAM: TODO provide link
 - ESP-32 C6: TODO provide link
-- Motors
+- Motors A4988
 - servo
 - limit switches
 - condensators
@@ -93,10 +93,43 @@ Wire everything together as indicated in the following schematic:
 
 For reference, here are some pictures of the resulting cable management (done under the board):
 
-<img src="documentation/images/wiring/board.png" width="400"><br>
-<img src="documentation/images/wiring/side.png" width="400">
+<img src="documentation/images/wiring/board.png" width="500"><br>
+<img src="documentation/images/wiring/side.png" width="500">
 
 ### Software
+
+We have four system components that need to interact with eachother in order to function properly.
+The following diagram summarizes the different intractions between the components:
+
+<img src="diagrams/exports/devices.png" width="400">
+
+#### Application
+
+All the system is driven by a [Flutter](https://flutter.dev/) cross-platform application.
+
+You can install the Flutter dev environment by following the installation instructions (on any OS): https://docs.flutter.dev/get-started/install
+
+Then navigate to the directory of the application, `code/helping_hand`.
+You can now launch the application on your platform of choice, on web for example `flutter run -d chrome`.
+
+Here are a few pictures of the application interface:
+
+<img src="documentation/application/overview.png" height="400"> <img src="documentation/application/remote_view.png" height="400"> <img src="documentation/application/new_button.png" height="400"><br>
+<img src="documentation/application/remote_config.png" height="400">
+<img src="documentation/application/add_remote.png" height="400">
+
+#### Arduino
+
+We use the [Arduino IDE](https://www.arduino.cc/en/software) to flash the two ESP-32 boards:
+
+- **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to `code/esp32-cam/README.md`.
+- **ESP-32 Plotter** (the remote controller): flash the `code/esp32-controller/sketch_webServer.ino`.
+
+#### Computer Vision Server
+
+We used a [Python](https://www.python.org/) web server (running on any computer or in the cloud) powered by the [Flask](https://flask.palletsprojects.com/en/3.0.x/) framework.
+
+Refer to the associated README to setup the python server: `code/CVserver/README.md`.
 
 ## Contributors
 
