@@ -124,7 +124,7 @@ Here are a few pictures of the application interface:
 We use the [Arduino IDE](https://www.arduino.cc/en/software) to flash the two ESP-32 boards:
 
 - **ESP-32 Cam** (the automatic configuration module using the camera): flash the `code/esp32-cam/esp32-cam.ino`. For more information about this module, please refer to the [ESP-32 CAM README](code/esp32-cam/README.md).
-- **ESP-32 Plotter** (the remote controller): flash the `code/esp32-controller/sketch_webServer.ino`. For more information about this module, please refer to the [ESP-32 C6 README](code/esp32-controller/README.md).
+- **ESP-32 Plotter** (the remote controller): flash the `code/esp32-controller/sketch_webServer/sketch_webServer.ino`. For more information about this module, please refer to the [ESP-32 C6 README](code/esp32-controller/README.md).
 
 #### Computer Vision Server
 
