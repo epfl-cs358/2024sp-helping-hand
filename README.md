@@ -117,9 +117,7 @@ To build for other targets, you can follow the standard Flutter building procedu
 
 Here are a few pictures of the application interface:
 
-<img src="documentation/application/overview.png" height="400"> <img src="documentation/application/remote_view.png" height="400"> <img src="documentation/application/new_button.png" height="400"><br>
-<img src="documentation/application/remote_config.png" height="400">
-<img src="documentation/application/add_remote.png" height="400">
+<img src="documentation/application/overview.png" height="400"> <img src="documentation/application/remote_view.png" height="400"> <img src="documentation/application/new_button.png" height="400"> <img src="documentation/application/remote_config.png" height="400"> <img src="documentation/application/add_remote.png" height="400">
 
 #### Arduino
 
