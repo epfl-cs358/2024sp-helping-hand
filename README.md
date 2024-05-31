@@ -59,10 +59,12 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - Two _8mm_ diameter stainless steel bar, _160mm_ of length
     - Four _8mm_ rod bearings to slide on the bars
     - Two _5mm_ diameter stainless steel bars, _150mm_ of length
-    - Eight _M4_ screws with nuts, _35mm_ of length
-    - Eight _M2_ screws with nuts, _20mm_ of length
-    - One _M5_ screw with nut, _30mm_ of length
-    - Two _M5_ screws with nuts, _20mm_ of length
+    - Four _M4_ screws with nuts (two are nylon insert lock nuts), _35mm_ of length
+    - Four _M4_ screws with nuts, _12mm_ of length
+    - Eight _M3_ screws with nuts, _10mm_ of length
+    - One _M5_ screw with nut, _20mm_ of length
+    - Eight _M3_ screws, _12mm_ of length
+    - Two _M2.5_ screws with nuts, _12mm_ of length
     - Eight neodymium magnets, cubes of _5mm_ sides
     - Two rubber sheets, _30mm_ by _12mm_
     - Two plastic belts, _610mm_ and _320mm_
