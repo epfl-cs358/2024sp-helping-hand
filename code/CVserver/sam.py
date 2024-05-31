@@ -56,9 +56,14 @@ def process_image(image_file):
     buttons = filter_close_buttons(buttons)
 
     if DEBUG_OUT:
+        font_face = cv2.FONT_HERSHEY_SIMPLEX
+        font_scale = 1
+        font_thickness = 2
+        text_color = (0, 0, 255)
         for button in buttons:
             print(button[1], button[2])
             cv2.circle(image, (button[1], button[2]), 5, (0, 0, 255), -1)
+            cv2.putText(image, button[0], (button[1], button[2]), font_face, font_scale, text_color, font_thickness)
         cv2.imwrite('last_analyze/capture_buttons.jpg', image)
 
     return buttons
@@ -103,11 +108,13 @@ def image_bytes_to_opencvimg(img_file):
 
 def masks_to_button_coordinates(masks):
     buttons = []
+    i = 1
     for mask in masks:
         bbox = mask['bbox']
         x = bbox[0] + bbox[2]/2
         y = bbox[1] + bbox[3]/2
-        buttons.append(("button", int(x), int(y)))
+        buttons.append((f'{i}', int(x), int(y)))
+        i += 1
 
     return buttons
 
