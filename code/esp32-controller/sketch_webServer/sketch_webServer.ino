@@ -31,7 +31,7 @@ Preferences preferences;
 AccelStepper X(MotorInterfaceType, 0, 4); //0: step, 4: direction
 AccelStepper Y(MotorInterfaceType, 20, 21); //20: step, 21: direction
 MultiStepper XY;
-#define MOTOR_MAX_SPEED 460.0
+#define MOTOR_MAX_SPEED 200.0
 #define CALIBRATION_MAX_SPEED 25.0
 const int MAX_X = 400;
 const int MAX_Y = 1000;
