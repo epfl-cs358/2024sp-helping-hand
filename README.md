@@ -53,7 +53,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - [Gear holders for the column: bottom](design/plotter/plotter_column_2_belt_holder_bottom.stl) 
     - [All clamp parts](design/clamp/)
     - [All y axis parts](design/y_axis/)
-3. For the assembly you will also need the following parts
+3. For the assembly you will also need the following parts:
     - One _8mm_ diameter stainless steel bar, _290mm_ of length
     - One _8mm_ diameter stainless steel bar, _305mm_ of length
     - Two _8mm_ diameter stainless steel bar, _160mm_ of length
@@ -63,6 +63,7 @@ Here are the steps to follow to build the main body (and the camera module) of t
     - Four _M4_ screws with nuts, _12mm_ of length
     - Eight _M3_ screws with nuts, _10mm_ of length
     - One _M5_ screw with nut, _20mm_ of length
+    - Two _M5_ screws with nuts and spacers, _20mm_ of length
     - Eight _M3_ screws, _12mm_ of length
     - Two _M2.5_ screws with nuts, _12mm_ of length
     - Eight neodymium magnets, cubes of _5mm_ sides
